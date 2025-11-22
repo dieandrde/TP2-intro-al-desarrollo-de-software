@@ -1,0 +1,43 @@
+.contenedor_precios {
+
+    background-color: rgb(240, 240, 240);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 100px;
+
+}
+
+.caja {
+    background-color: white;
+    width: 500px;       /* ancho del cuadrado */
+    height: 550x;      /* alto del cuadrado -> cuadrado perfecto */
+    padding: 20px;      /* opcional, para espacio interior */
+    margin: 20px;       /* separación entre cajas */
+    color: black;       /* texto en blanco */
+    align-items: center;
+    border-radius: 8px; /* opcional: puntas redondeadas */
+
+}
+.card-body {
+  padding: 18px;
+}
+
+.card-body h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.precio {
+  font-size: 20px;
+  font-weight: bold;
+}
+
