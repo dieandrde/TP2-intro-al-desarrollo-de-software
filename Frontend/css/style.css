@@ -132,50 +132,65 @@ color: #00d17a;
 
 
 
-.reserva {
+.planes {
     width: 100%;
     padding: 40px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     background: white;
-    padding-left: 80px;
+    padding-left: 40px;
+    gap: 20PX;
 }
 
-.reserva-contenido {
-    width: 310px;
+.planes-contenido {
+    width: 290px;
+    min-height: 310px;
     border: 1px solid rgba(0,0,0,.2);
     padding: 20px;
     border-radius: 8px;
-}
-
-.reserva-contenido h2 {
-    text-align: center;
-    font-size: 2.2rem;
-    color: #111;
-    margin-bottom: 10px;
-}
-
-.form-reserva {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    justify-content: space-between;
 }
 
-.form-reserva label {
+.planes-contenido h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #0a0a0a;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.precio {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #00a83c;
+    margin-bottom: 12px;
+}
+
+.beneficios {
+    margin: 10px 0 20px 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.beneficios li {
+    margin-bottom: 8px;
     font-size: 1rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.beneficios li::before {
+    content: "✔";
+    color: #00a83c;
     font-weight: bold;
-    color: #222;
+    font-size: 0.9rem;
 }
 
-.form-reserva input,
-.form-reserva select {
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-}
-
-.btn-reserva {
+.btn {
     padding: 12px;
     background: #00a83c;
     color: white;
@@ -186,9 +201,14 @@ color: #00d17a;
     transition: .2s;
 }
 
-.btn-reserva:hover {
+.btn:hover {
     background: #008f32;
 }
 
-
-
+footer {
+    padding: 2rem;
+    text-align: center;
+    background: #00a83c;
+    color: white;
+    margin-top: 2rem;
+}
