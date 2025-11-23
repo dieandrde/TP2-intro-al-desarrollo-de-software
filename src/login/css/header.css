@@ -1,0 +1,53 @@
+.header{
+    width: 100%;
+    height: 70px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.06); 
+}
+
+.header-izquierda{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-header {
+    width: 35px;
+    height: 35px;
+}
+
+.brand-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.header-right a {
+    text-decoration: none;
+    font-size: 1rem;
+    color: #333;
+    transition: 0.2s;
+}
+
+.header-right a:hover {
+    color: #1e6f43;
+}
+
+.reservar-btn:hover {
+    background-color: #14522f;
+    color: white;
+}
