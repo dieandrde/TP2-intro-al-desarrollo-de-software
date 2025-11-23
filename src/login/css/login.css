@@ -1,0 +1,98 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css";
+@import url('https://fonts.googleapis.com/css2?family=Momo+Trust+Display&display=swap');
+
+.contenedor-principal {
+    background-color: #1a4a30;
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    margin-top: 60px; 
+}
+
+.recordar a {
+    color: rgb(179, 178, 178);
+}
+
+.lado-imagen {
+    flex: 1;
+    background-image: url("../images/fondo.jpg");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.capa-imagen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+}
+
+.texto-imagen {
+    position: relative;
+    max-width: 450px;
+    text-align: center;
+    color: white;
+    padding: 20px;
+    font-family: "Momo Trust Display", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.titulo-izquierdo{
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.subtitulo-izquierdo{
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.titulo-login{
+    font-family: "Momo Trust Display", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.lado-login {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-caja {
+    width: 90%;
+    max-width: 400px;
+}
+
+.field{
+    width: 100%;
+}
+
+.login-caja form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+}
+
+.box {
+    background: rgba(12, 32, 22, 0.92);
+    backdrop-filter: blur(6px);
+}
+
+.button.is-primary {
+    background-color: #025f2c ;
+    border-color: #14522f;
+}
+.button.is-primary:hover {
+    background-color: #14522f;
+}
