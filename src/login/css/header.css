@@ -1,3 +1,16 @@
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) { 
+    .header {
+        flex-direction: column;
+    }
+}
+
+
 .header{
     width: 100%;
     height: 70px;
@@ -25,29 +38,25 @@
 }
 
 .brand-title {
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 700; /*lo hace verse negrita*/
     color: #1a1a1a;
 }
 
-.header-right {
+.header-derecho{
     display: flex;
     align-items: center;
     gap: 25px;
 }
 
-.header-right a {
+.header-derecho a {
     text-decoration: none;
     font-size: 1rem;
     color: #333;
     transition: 0.2s;
 }
 
-.header-right a:hover {
+.header-derecho a:hover {
     color: #1e6f43;
 }
 
-.reservar-btn:hover {
-    background-color: #14522f;
-    color: white;
-}

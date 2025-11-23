@@ -12,9 +12,6 @@
     height: 100vh;
 }
 
-.recordar a {
-    color: rgb(179, 178, 178);
-}
 
 .lado-imagen {
     flex: 1;
@@ -93,11 +90,61 @@
     backdrop-filter: blur(6px);
 }
 
+.recordar{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+}
+
+.recordar a {
+    color: rgb(179, 178, 178);
+}
+
+.registrarse{
+    padding-top: 10px;
+}
+
 .button.is-primary {
+    margin-top: "50px";
     background-color: rgb(2, 95, 44) ;
     border-color: rgb(21, 84, 49);
     color: rgb(205, 205, 205);
 }
 .button.is-primary:hover {
     background-color: rgb(20, 82, 47);
+}
+
+
+@media (max-width: 768px) {
+    .contenedor-principal {
+        flex-direction: column;
+    }
+    .texto-imagen{
+        display: flex;
+        flex-direction:column;
+        margin-top: 75px;
+        font-size: 10;
+    }
+    .titulo-login{
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 10px;
+    }
+}
+
+@media (max-width: 480px) { 
+    .contenedor-principal {
+        flex-direction: column;
+    }
+    .texto-imagen{
+        display: flex;
+        flex-direction:column;
+        margin-top: 75px;
+        font-size: 10;
+    }
+    .titulo-login{
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 10px;
+    }
 }
