@@ -1,16 +1,94 @@
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) { 
+    .header {
+        flex-direction: column;
+    }
+}
+
+
+.titulo-reservas {
+    margin-top: 60px; 
+}
+
+.button.is-primary {
+    background-color: #1fbf4a; 
+    border-color: #1aa43f;
+    color: white;
+}
+
+.button.is-primary:hover {
+    background-color: #149737;
+}
+
+
+
+.header{
+    width: 100%;
+    height: 70px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.06); 
+}
+
+.header-izquierda{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-header {
+    width: 35px;
+    height: 35px;
+}
+
+.brand-title {
+    font-size: 20px;
+    font-weight: 700; /*lo hace verse negrita*/
+    color: #1a1a1a;
+}
+
+.header-derecho{
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.header-derecho a {
+    text-decoration: none;
+    font-size: 1rem;
+    color: #333;
+    transition: 0.2s;
+}
+
+.header-derecho a:hover {
+    color: #1e6f43;
+}
+
 .contenedor_precios {
 
     background-color: rgb(240, 240, 240);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 10px;
 }
 
 .caja {
     background-color: white;
     width: 500px;       /* ancho del cuadrado */
-    height: 550x;      /* alto del cuadrado -> cuadrado perfecto */
+    height: 550px;      /* alto del cuadrado -> cuadrado perfecto */
     padding: 20px;      /* opcional, para espacio interior */
     margin: 20px;       /* separación entre cajas */
     color: black;       /* texto en blanco */
@@ -40,3 +118,9 @@
   font-weight: bold;
 }
 
+.footer {
+    padding: 2rem;
+    text-align: center;
+    background: #00a83c;
+    color: white;
+}
