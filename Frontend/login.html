@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="./css/header.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-izquierda">
+            <img src="" alt="Logo" class="logo-header">
+            <span class="brand-title">ALQUILER DE CANCHAS</span>
+        </div>
+
+        <nav class="header-derecho">
+            <a href="index.html">Inicio</a>
+            <a href="reservas.html">Reservar</a>
+            <a href="#">Galería</a>
+            <a href="">Reseñas</a>
+        </nav>
+    </header>
+    
+    <div class="contenedor-principal">
+
+        <div class="lado-imagen">
+            <div class="capa-imagen"></div>
+
+            <div class="texto-imagen">
+                <h1 class="titulo-izquierdo">El mejor sitio para reservar canchas</h1>
+                <p class="subtitulo-izquierdo">
+                    Gestioná tus turnos fácilmente y disfrutá de la mejor experiencia deportiva.
+                </p>
+            </div>
+        </div>
+
+        <!--login -->
+        <div class="lado-login">
+            <div class="login-caja">
+                <h1 class="titulo-login is-size-2 has-text-centered">Iniciar Sesión</h1>
+                <form class="box">
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <input class="input" type="email" placeholder="ej: deandrade@fi.uba.ar" />
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Contraseña</label>
+                        <input class="input" type="password" placeholder="********" />
+                    </div>
+
+                    <div class="recordar"><a href="#">¿Olvidó su contraseña?</a></div>
+
+                    <button class="button is-primary">Iniciar Sesión</button>
+
+                    <div class="registrarse">
+                        ¿Primera vez?<a href="#"> ¡Registrate!</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <script src="./js/login.js"></script>
+</body>
+</html>
