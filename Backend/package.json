@@ -1,18 +1,20 @@
-{
-  "name": "canchas",
+
+  {
+  "name": "backend",
   "version": "1.0.0",
-  "description": "Backend de reservas",
-  "main": "src/api.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/api.js"
+    "dev": "node --watch src/index.js"
   },
-  "author": "alexis",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
+  "type": "module",
   "dependencies": {
-    "express": "^5.2.1"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.11",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
     "pg": "^8.16.3"
   }
-}
+  }
