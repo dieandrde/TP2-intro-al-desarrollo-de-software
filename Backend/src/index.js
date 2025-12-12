@@ -3,6 +3,11 @@ import express from "express";
 import cors from "cors";
 import { pool } from "./db/db.js";
 import bcrypt from "bcryptjs";
+import dotenv from "dotenv";
+import jwt from 'jsonwebtoken';
+import { verifyToken, requireAdmin } from './middlewares/middlewares.js';
+dotenv.config();
+const JWT_SECRET = process.env.JWT_SECRET;
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -18,10 +23,10 @@ app.use(cors());
 //  fecha_registro DATE NOT NULL DEFAULT CURRENT_DATE,
 //);
 
-
-app.get("/usuarios", async (req, res) => {
+app.get("/usuarios", verifyToken, requireAdmin, async (req, res) => {
     try {
-        const result = await pool.query("SELECT * FROM usuarios " );
+        const sql = "SELECT id, nombre, email, telefono, fecha_registro, es_admin FROM usuarios"; 
+        const result = await pool.query(sql);
         res.json(result.rows);
     } catch (err) {
         console.error(err);
@@ -31,12 +36,12 @@ app.get("/usuarios", async (req, res) => {
 
 
 
-
-app.get("/usuarios/:id", async (req, res) => {
+app.get("/usuarios/:id", verifyToken, async (req, res) => {
     const userId = req.params.id; 
     
     try {
-        const result = await pool.query("SELECT id, nombre, email,password_hash, telefono, fecha_registro FROM usuarios WHERE id = $1", [userId]); 
+        const sql = "SELECT id, nombre, email, telefono, fecha_registro, es_admin FROM usuarios WHERE id = $1";
+        const result = await pool.query( sql, [userId]); 
 
         if (result.rows.length === 0) {
             return res.status(404).json({ message: "Usuario no encontrado." });
@@ -90,11 +95,10 @@ app.post("/usuarios", async (req, res) => {
         const password_hash = await bcrypt.hash(password, 10);
         
         const sql = `
-            INSERT INTO usuarios (nombre, email, password_hash, telefono)
-            VALUES ($1, $2, $3, $4)
-            RETURNING id, nombre, email, telefono, fecha_registro`;
-        const result = await pool.query(sql, [nombre, email, password_hash, telefono]); 
-
+            INSERT INTO usuarios (nombre, email, password_hash, telefono, es_admin, fecha_registro)
+            VALUES ($1, $2, $3, $4, FALSE, CURRENT_DATE) 
+            RETURNING id, nombre, email, telefono, es_admin, fecha_registro`;
+        const result = await pool.query(sql, [nombre, email, password_hash, telefono]);
         res.status(201).json({ message: 'Usuario creado exitosamente', usuario: result.rows[0] });
 
     } catch (error) {
@@ -111,8 +115,7 @@ app.post("/usuarios", async (req, res) => {
 
 
 
-app.put("/usuarios/:id", async (req, res) => {
-
+app.put("/usuarios/:id", verifyToken, async (req, res) => {
     const userId = req.params.id;
     if ( !req.body){
         return res.status(400).json({ error: "No hay body" });
@@ -158,9 +161,10 @@ app.put("/usuarios/:id", async (req, res) => {
         
         const sql = `
             UPDATE usuarios
+            -- CRÍTICO: No incluimos 'es_admin' en el SET. No se puede auto-asignar admin.
             SET nombre = $1, email = $2, password_hash = $3, telefono = $4
             WHERE id = $5
-            RETURNING id, nombre, email, telefono, fecha_registro;
+            RETURNING id, nombre, email, telefono, fecha_registro, es_admin;
         `;
 
         const updated = await pool.query(sql, [
@@ -170,7 +174,6 @@ app.put("/usuarios/:id", async (req, res) => {
             telefono,
             userId
         ]);
-        
         
         res.status(200).json({
             message: "Usuario actualizado correctamente.",
@@ -194,11 +197,11 @@ app.put("/usuarios/:id", async (req, res) => {
     }
 })
 
-app.delete("/usuarios/:id", async (req, res) => {
+app.delete("/usuarios/:id", verifyToken, requireAdmin, async (req, res) => {
     const userId = req.params.id;
 
     try {
-        const query = `DELETE FROM usuarios WHERE id = $1 RETURNING id, nombre, email`;
+        const query = `DELETE FROM usuarios WHERE id = $1 RETURNING id, nombre, email, es_admin`;
         const result = await pool.query(query, [userId]);
 
         if (result.rowCount === 0) {
@@ -216,5 +219,61 @@ app.delete("/usuarios/:id", async (req, res) => {
     }
 });
 
+app.post("/api/auth/login", async (req, res) => {
+    
+    const email = req.body.email;
+    const password = req.body.password;
+
+    if ( !email) {
+        return res.status(400).json({ message: 'email es obligatorio para el registro.' });
+    }
+    if ( !password) {
+            return res.status(400).json({ message: 'password es obligatorio para el registro.' });
+    }
+
+    try {
+        const userQuery = 'SELECT id, password_hash, es_admin FROM usuarios WHERE email = $1';
+        const result = await pool.query(userQuery, [email]);
+
+        if (result.rows.length === 0) {
+            return res.status(401).json({ message: "Credenciales incorrectas." });
+        }
+
+        const user = result.rows[0];
+
+        const passwordMatch = await bcrypt.compare(password, user.password_hash);
+
+        if (!passwordMatch) {
+            return res.status(401).json({ message: "Credenciales incorrectas." });
+        }
+
+        const token = jwt.sign(
+            { 
+                id: user.id, 
+                es_admin: user.es_admin 
+            },
+            JWT_SECRET, 
+            { expiresIn: '1h' } 
+        );
 
 
+        res.status(200).json({
+            message: "Login exitoso.",
+            token: token,
+            userId: user.id, 
+            esAdmin: user.es_admin
+        });
+
+    } catch (error) {
+        console.error('Error en el login:', error);
+        res.status(500).json({ message: "Error interno del servidor." });
+    }
+});
+
+
+
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("Servidor corriendo en http://localhost:" + PORT);
+});
