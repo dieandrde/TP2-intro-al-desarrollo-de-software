@@ -44,23 +44,22 @@
         <div class="lado-login">
             <div class="login-caja">
                 <h1 class="titulo-login is-size-2 has-text-centered">Iniciar Sesión</h1>
-                <form class="box">
+                <form class="box"  >
                     <div class="field">
                         <label class="label">Email</label>
-                        <input class="input" type="email" placeholder="ej: deandrade@fi.uba.ar" />
+                        <input id="login-email"  class="input" type="email" placeholder="ej: deandrade@fi.uba.ar" />
                     </div>
 
                     <div class="field">
                         <label class="label">Contraseña</label>
-                        <input class="input" type="password" placeholder="********" />
+                        <input id="login-password"    class="input" type="password" placeholder="********" />
                     </div>
 
-                    <div class="recordar"><a href="#">¿Olvidó su contraseña?</a></div>
+                    <button class="button is-primary" type="button" onclick="iniciarSesion()">Iniciar Sesión</button>
 
-                    <button class="button is-primary">Iniciar Sesión</button>
 
                     <div class="registrarse">
-                        ¿Primera vez?<a href="#"> ¡Registrate!</a>
+                        ¿Primera vez?<a href="registro.html"> ¡Registrate!</a>
                     </div>
                 </form>
             </div>
@@ -116,6 +115,6 @@
             </div>
     </footer>
     
-    <script src="./js/login.js"></script>
+    <script src="js/login.js"></script>
 </body>
 </html>
