@@ -13,29 +13,19 @@ app.use(express.json());
 app.use(cors());
 
 
-
-//CREATE TABLE usuarios (
-//  id SERIAL PRIMARY KEY,
-//  nombre VARCHAR(100) NOT NULL,
-//  email VARCHAR(100) UNIQUE NOT NULL,
-//  password_hash VARCHAR(255) NOT NULL, 
-//  telefono VARCHAR(20),
-//  fecha_registro DATE NOT NULL DEFAULT CURRENT_DATE,
-//);
-
+// Te devuelve todos los usuarios (sin password_hash)
 app.get("/usuarios", verifyToken, requireAdmin, async (req, res) => {
     try {
         const sql = "SELECT id, nombre, email, telefono, fecha_registro, es_admin FROM usuarios"; 
         const result = await pool.query(sql);
         res.json(result.rows);
     } catch (err) {
-        console.error(err);
         res.status(500).json({ error: "DB error" });
     }
 });
 
 
-
+// Te devuelve un usuario por ID (sin password_hash)
 app.get("/usuarios/:id", verifyToken, async (req, res) => {
     const userId = req.params.id; 
     
@@ -46,14 +36,13 @@ app.get("/usuarios/:id", verifyToken, async (req, res) => {
         if (result.rows.length === 0) {
             return res.status(404).json({ message: "Usuario no encontrado." });
         }
-        console.log(result.rows[0]);
         res.json(result.rows[0]);
     } catch (err) {
         res.status(500).json({ error: "DB error al obtener usuario." });
     }
 });
 
-
+// Crea un nuevo usuario
 app.post("/usuarios", async (req, res) => {
 
   if ( req.body === undefined){
@@ -100,7 +89,6 @@ app.post("/usuarios", async (req, res) => {
             RETURNING id, nombre, email, telefono, es_admin, fecha_registro`;
         const result = await pool.query(sql, [nombre, email, password_hash, telefono]);
         res.status(201).json({ message: 'Usuario creado exitosamente', usuario: result.rows[0] });
-
     } catch (error) {
         
         if (error.code === '23505') { 
@@ -114,8 +102,9 @@ app.post("/usuarios", async (req, res) => {
 
 
 
-
+// Actualizar un usuario existente
 app.put("/usuarios/:id", verifyToken, async (req, res) => {
+
     const userId = req.params.id;
     if ( !req.body){
         return res.status(400).json({ error: "No hay body" });
@@ -125,24 +114,21 @@ app.put("/usuarios/:id", verifyToken, async (req, res) => {
     if (result.rows.length === 0) {
         return res.status(404).json({ message: "Usuario no encontrado." });
     }
-  const nombre = req.body.nombre;
-  const email = req.body.email;
-  const telefono = req.body.telefono;
-  const password = req.body.password;
+    const nombre = req.body.nombre;
+    const email = req.body.email;
+    const telefono = req.body.telefono;
+    const password = req.body.password;
 
-  if (!nombre) {
-        return res.status(400).json({ message: 'Nombre es obligatorio para el registro.' });
-  }
-  if ( !email) {
-        return res.status(400).json({ message: 'email es obligatorio para el registro.' });
-  }
-  if ( !password) {
-        return res.status(400).json({ message: 'password es obligatorio para el registro.' });
-  }
-  if ( !telefono) {
-        return res.status(400).json({ message: 'telefono es obligatorio para el registro.' });
-  }
-
+    if (!nombre) {
+            return res.status(400).json({ message: 'Nombre es obligatorio para el registro.' });
+    }
+    if ( !email) {
+            return res.status(400).json({ message: 'email es obligatorio para el registro.' });
+    }
+    
+    if ( !telefono) {
+            return res.status(400).json({ message: 'telefono es obligatorio para el registro.' });
+    }
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const telefonoRegex = /^\d{10}$/
 
@@ -157,7 +143,20 @@ app.put("/usuarios/:id", verifyToken, async (req, res) => {
   }
 
     try {
-        const password_hash = await bcrypt.hash(password, 10);
+
+
+        const userCheck = await pool.query("SELECT password_hash FROM usuarios WHERE id = $1", [userId]);
+        
+        if (userCheck.rows.length === 0) {
+            return res.status(404).json({ message: "Usuario no encontrado." });
+        }
+
+        let finalPasswordHash = userCheck.rows[0].password_hash;
+
+        if (password && password.trim() !== "") {
+            // Si el admin escribió algo en el campo password, lo hasheamos
+            finalPasswordHash = await bcrypt.hash(password, 10);
+        }
         
         const sql = `
             UPDATE usuarios
@@ -170,7 +169,7 @@ app.put("/usuarios/:id", verifyToken, async (req, res) => {
         const updated = await pool.query(sql, [
             nombre,
             email,
-            password_hash,
+            finalPasswordHash,
             telefono,
             userId
         ]);
@@ -196,7 +195,7 @@ app.put("/usuarios/:id", verifyToken, async (req, res) => {
         });
     }
 })
-
+// Borra un usuario
 app.delete("/usuarios/:id", verifyToken, requireAdmin, async (req, res) => {
     const userId = req.params.id;
 
@@ -214,17 +213,20 @@ app.delete("/usuarios/:id", verifyToken, requireAdmin, async (req, res) => {
         });
 
     } catch (err) {
-        console.error(err);
         res.status(500).json({ error: "Error en la base de datos." });
     }
 });
 
-app.post("/api/auth/login", async (req, res) => {
+// Login de usuario
+app.post("/login", async (req, res) => {
+
+
     
-    const email = req.body.email;
-    const password = req.body.password;
+    const email = req.body.email ? req.body.email.trim() : null; 
+    const password = req.body.password ? req.body.password.trim() : null; // <-- ¡AQUÍ!
 
     if ( !email) {
+
         return res.status(400).json({ message: 'email es obligatorio para el registro.' });
     }
     if ( !password) {
@@ -242,7 +244,6 @@ app.post("/api/auth/login", async (req, res) => {
         const user = result.rows[0];
 
         const passwordMatch = await bcrypt.compare(password, user.password_hash);
-
         if (!passwordMatch) {
             return res.status(401).json({ message: "Credenciales incorrectas." });
         }
@@ -265,7 +266,6 @@ app.post("/api/auth/login", async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Error en el login:', error);
         res.status(500).json({ message: "Error interno del servidor." });
     }
 });
