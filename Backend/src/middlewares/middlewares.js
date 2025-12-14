@@ -1,8 +1,12 @@
+import dotenv from "dotenv";
+dotenv.config();
+const JWT_SECRET = process.env.JWT_SECRET;
+
 import jwt from 'jsonwebtoken';
-const JWT_SECRET = process.env.JWT_SECRET; // o donde lo hayas definido
 
 // Middleware: verifyToken
 export const verifyToken = (req, res, next) => {
+
     const authHeader = req.headers.authorization;
     
     // 1. Verificar formato del header
