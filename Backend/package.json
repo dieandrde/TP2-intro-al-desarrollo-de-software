@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node --watch src/index.js"
+    "dev": "node --watch src/index.js",
+    "seed-db": "node -r dotenv/config src/seed.js"
   },
   "keywords": [],
   "author": "",
