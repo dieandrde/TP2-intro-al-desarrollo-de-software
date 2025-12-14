@@ -1,0 +1,12 @@
+
+
+table {
+  width: 800px;      
+  border-collapse: collapse;
+}
+.contenedor_tabla {
+  width:800px;      
+  height: 400px;   
+  overflow-y: auto;
+
+}
