@@ -13,13 +13,13 @@ async function iniciarSesion( ) {
         });
 
         const resultado = await response.json();
-
+        
         if (response.ok) {
             localStorage.setItem('jwtToken', resultado.token);
             localStorage.setItem('esAdmin', resultado.esAdmin);
             
             if (resultado.esAdmin) {
-                window.location.href = '/administrador.html'; 
+                window.location.href = '/administrador.html';
             } else {
                 window.location.href = '/index.html'; 
             }
