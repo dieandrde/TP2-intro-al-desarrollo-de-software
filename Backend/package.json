@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 {
+=======
+
+  {
+>>>>>>> feature/backend-reservas
   "name": "backend",
   "version": "1.0.0",
   "description": "",
@@ -16,4 +21,8 @@
     "express": "^5.2.1",
     "pg": "^8.16.3"
   }
+<<<<<<< HEAD
 }
+=======
+  }
+>>>>>>> feature/backend-reservas
