@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 import { pool } from "./db/db.js";
-import { crearReserva } from "./controllers/reservas.controller.js"; // Importante el .js
+import { crearReserva, obtenerReservas } from "./controllers/reservas.controller.js";
+
 
 const app = express();
 
@@ -12,6 +13,8 @@ app.use(cors());
 app.get("/", (req, res) => {
     res.json({ message: "Backend funcionando" });
 });
+//
+app.get("/api/reservas", obtenerReservas);
 
 app.post("/api/reservas", crearReserva);
 
