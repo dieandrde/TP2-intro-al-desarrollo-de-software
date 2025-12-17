@@ -1,4 +1,10 @@
 start-db:
 	cd ./Backend && docker compose up -d
-run-backend:
+
+stop-db:
+	cd ./Backend && docker compose down
+
+start-backend:
 	cd ./Backend && npm run dev
+
+run-backend: start-db start-backend
