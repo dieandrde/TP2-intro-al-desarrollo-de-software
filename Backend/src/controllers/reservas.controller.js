@@ -39,3 +39,18 @@ export const crearReserva = async (req, res) => {
     }
 };
 
+export const obtenerReservas = async (req, res) => {
+    try {
+    //Traemos todas las reservas y las ordenamos por fecha
+        const query = 'SELECT * FROM reservas ORDER BY fecha DESC, hora_inicio DESC';
+        const resultado = await pool.query(query);
+
+    //  Respondemos con la lista de reservas en formato JSON(yeisson)
+        res.status(200).json(resultado.rows);
+    } catch (error) {
+        console.error("ERROR AL OBTENER:", error.message);
+        res.status(500).json({ error: 'Error al obtener las reservas' });
+    }
+};
+
+
