@@ -1,25 +1,21 @@
-const db = require('../db')
+import { pool } from '../db/db.js';
 
-const canchaDisponible = async (
-    canchasId,
-    fecha,
-    horaInicio,
-    horaFin
-) => {
-    const [reservas] = await  db.query(
-        `
-    SELECT id
-    FROM reservas
-    WHERE canchas_id = ?
-      AND fecha = ?
-      AND estado IN ('pendiente', 'confirmado')
-      AND hora_inicio < ?
-      AND hora_fin > ?
-    `,
-    [canchasId, fecha, horaFin, horaInicio]
-    );
+//usamos 'export' para que el controlador lo pueda encontrar
+export const canchaDisponible = async (canchaId, fecha, horaInicio, horaFin) => {
+    const query = `
+        SELECT id 
+        FROM reservas 
+        WHERE cancha_id = $1 
+        AND fecha = $2 
+        AND estado != 'Cancelada'
+        AND NOT (
+            hora_fin <= $3 OR hora_inicio >= $4
+        );
+    `;
+    //es igual pero por las dudas 
 
-    return reservas.length === 0;
+    const res = await pool.query(query, [canchaId, fecha, horaInicio, horaFin]);
+    
+    // si no hay filas,la cancha está disponible
+    return res.rows.length === 0;
 };
-
-module.export = { canchaDisponible}
