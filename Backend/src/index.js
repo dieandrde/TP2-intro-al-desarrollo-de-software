@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { pool } from "./db/db.js";
-import { crearReserva, obtenerReservas, eliminarReserva } from "./controllers/reservas.controller.js";
+import { crearReserva, obtenerReservas, eliminarReserva,actualizarReserva } from "./controllers/reservas.controller.js";
 
 
 const app = express();
@@ -15,6 +15,7 @@ app.get("/", (req, res) => {
 });
 //
 
+app.put("/api/reservas/:id", actualizarReserva);
 
 app.delete("/api/reservas/:id", eliminarReserva);
 
