@@ -53,4 +53,20 @@ export const obtenerReservas = async (req, res) => {
     }
 };
 
+export const eliminarReserva = async (req, res) => {
+    try {
+        const {id} = req.params; // Sacamos el ID de la URL
+        const resultado = await pool.query('DELETE FROM reservas WHERE id = $1 RETURNING *', [id]);
+
+        if (resultado.rowCount === 0) {
+            return res.status(404).json({ error: 'Reserva no encontrada' });
+        }
+        res.status(200).json({ mensaje: 'Reserva cancelada exitosamente', reserva: resultado.rows[0] });
+    } catch (error) {
+        res.status(500).json({ error: 'Error al eliminar la reserva' });
+    }
+};
+
+
+
 
