@@ -1,6 +1,12 @@
 import { pool } from "../db/db.js";
 import { canchaDisponible } from "../services/disponibilidad.service.js";
 
+const calcularCosto = (inicio, fin, precio) => {
+    const [h1, m1] = inicio.split(':').map(Number);
+    const [h2, m2] = fin.split(':').map(Number);
+    const horas = (h2 + m2 / 60) - (h1 + m1 / 60);
+    return horas * (precio || 5000);
+};
 
 export const crearReserva = async (req, res) => {
     try {
@@ -72,16 +78,31 @@ export const actualizarReserva = async (req, res) => {
         const { id } = req.params;
         const { fecha, hora_inicio, hora_fin } = req.body;
 
+        //RECALCULAMOS
+        const costo_total = calcularCosto(hora_inicio, hora_fin, 5000);
+
         const query = `
             UPDATE reservas 
-            SET fecha = $1, hora_inicio = $2, hora_fin = $3 
-            WHERE id = $4 
+            SET fecha = $1, hora_inicio = $2, hora_fin = $3, costo_total = $4
+            WHERE id = $5 
             RETURNING *;
         `;
-        const resultado = await pool.query(query, [fecha, hora_inicio, hora_fin, id]);
+        
+        //Agregamos el costo_total a los valores que enviamos a la DB
+        const values = [fecha, hora_inicio, hora_fin, costo_total, id];
+        const resultado = await pool.query(query, values);
 
-        res.status(200).json({ mensaje: 'Reserva actualizada', reserva: resultado.rows[0] });
+        //Validamos
+        if (resultado.rowCount === 0) {
+            return res.status(404).json({ error: 'Reserva no encontrada' });
+        }
+
+        res.status(200).json({ 
+            mensaje: 'Reserva actualizada y costo recalculado', 
+            reserva: resultado.rows[0] 
+        });
     } catch (error) {
+        console.error("Error en Update:", error.message);
         res.status(500).json({ error: 'Error al actualizar' });
     }
 };
