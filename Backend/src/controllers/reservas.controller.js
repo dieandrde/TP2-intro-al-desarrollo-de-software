@@ -67,6 +67,23 @@ export const eliminarReserva = async (req, res) => {
     }
 };
 
+export const actualizarReserva = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { fecha, hora_inicio, hora_fin } = req.body;
 
+        const query = `
+            UPDATE reservas 
+            SET fecha = $1, hora_inicio = $2, hora_fin = $3 
+            WHERE id = $4 
+            RETURNING *;
+        `;
+        const resultado = await pool.query(query, [fecha, hora_inicio, hora_fin, id]);
+
+        res.status(200).json({ mensaje: 'Reserva actualizada', reserva: resultado.rows[0] });
+    } catch (error) {
+        res.status(500).json({ error: 'Error al actualizar' });
+    }
+};
 
 
