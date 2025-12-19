@@ -30,39 +30,58 @@
     <div class="contenedor-principal">
 
         <div class="lado-imagen">
-            <div class="capa-imagen"></div>
+            <div class="contenedor_tabla"> 
+                <table class="table">
+                    <thead>      
+                        <tr>        
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Hora inicio</th>
+                        <th>Hora fin</th>
+                        <th>Costo total</th>
+                        <th>Cancha</th>
+                        <th>Acciones</th>
+                        </tr>
+                    </thead>
 
-            <div class="texto-imagen">
-                <h1 class="titulo-izquierdo">El mejor sitio para reservar canchas</h1>
-                <p class="subtitulo-izquierdo">
-                    Gestioná tus turnos fácilmente y disfrutá de la mejor experiencia deportiva.
-                </p>
+                    <tbody id="lista_mis_reservas">
+                        
+                        
+                    </tbody>
+                </table>
+                
             </div>
+
+
         </div>
 
-        <!--login -->
         <div class="lado-login">
             <div class="login-caja">
-                <h1 class="titulo-login is-size-2 has-text-centered">Iniciar Sesión</h1>
-                <form class="box"  >
+                <h1 class="titulo-login is-size-2 has-text-centered">Editar sesion</h1>
+                <form class="box" id="form-editar-reserva">
+                    <input type="hidden" id="reserva-edit-id">
+                    <input type="hidden" id="reserva-cancha-id">
                     <div class="field">
-                        <label class="label">Email</label>
-                        <input id="login-email"  class="input" type="email" placeholder="ej: deandrade@fi.uba.ar" />
+                        <label class="label">fecha</label>
+                        <input id="reserva-edit-fecha"  class="input" type="date" placeholder="ej: Franco Colapinto" />
                     </div>
 
                     <div class="field">
-                        <label class="label">Contraseña</label>
-                        <input id="login-password"    class="input" type="password" placeholder="********" />
+                        <label class="label">Hora inicio</label>
+                        <input id="reserva-edit-hora-inicio"    class="input" type="time" placeholder="ej: usuario2dominio.com" />
+                    </div>
+                    <div class="field">
+                        <label class="label">Hora fin</label>
+                        <input id="reserva-edit-hora-fin"  class="input" type="time" placeholder="ej: 1123456789" />
                     </div>
 
-                    <button class="button is-primary" type="button" onclick="iniciarSesion()">Iniciar Sesión</button>
 
+                    <button class="button is-primary" type="button" onclick="editar_reserva()">Confirmar</button>
 
-                    <div class="registrarse">
-                        ¿Primera vez?<a href="registro.html"> ¡Registrate!</a>
-                    </div>
                 </form>
             </div>
+            
+
         </div>
 
     </div>
@@ -115,6 +134,10 @@
             </div>
     </footer>
     
-    <script src="js/login.js"></script>
+    <script src="./js/mis_reservas.js"></script>
+    <script>
+        cargar_mis_reservas();
+    </script>
 </body>
 </html>
+

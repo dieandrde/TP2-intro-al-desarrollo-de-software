@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,7 +7,6 @@
     <title>Login</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
     <link rel="stylesheet" href="style/main.css">
-
 
 </head>
 <body>
@@ -40,27 +40,26 @@
             </div>
         </div>
 
-        <!--login -->
         <div class="lado-login">
             <div class="login-caja">
-                <h1 class="titulo-login is-size-2 has-text-centered">Iniciar Sesión</h1>
-                <form class="box"  >
+                <h1 class="titulo-login is-size-2 has-text-centered">Reserva</h1>
+                <form class="box" id="form-crear-reserva" >
+                    <input type="hidden" id="reserva-cancha-id">
                     <div class="field">
-                        <label class="label">Email</label>
-                        <input id="login-email"  class="input" type="email" placeholder="ej: deandrade@fi.uba.ar" />
+                        <label class="label">Fecha</label>
+                        <input id="reserva-fecha"   class="input" type="date" placeholder="ej: Carlos intro" />
                     </div>
-
                     <div class="field">
-                        <label class="label">Contraseña</label>
-                        <input id="login-password"    class="input" type="password" placeholder="********" />
+                        <label class="label">Hora inicio</label>
+                        <input id="reserva-hora-inicio" class="input" type="time" placeholder="ej: usuario@dominio.com" />
+                    </div>
+                    <div class="field">
+                        <label class="label">Hora fin</label>
+                        <input id="reserva-hora-fin"   class="input" type="time" placeholder="ej: 1126789201" />
                     </div>
 
-                    <button class="button is-primary" type="button" onclick="iniciarSesion()">Iniciar Sesión</button>
+                    <button class="button is-primary" type="button" onclick="crear_reserva()">Registrarte</button>
 
-
-                    <div class="registrarse">
-                        ¿Primera vez?<a href="registro.html"> ¡Registrate!</a>
-                    </div>
                 </form>
             </div>
         </div>
@@ -115,6 +114,10 @@
             </div>
     </footer>
     
-    <script src="js/login.js"></script>
+    <script src="js/reserva.js"></script>
 </body>
 </html>
+
+
+
+

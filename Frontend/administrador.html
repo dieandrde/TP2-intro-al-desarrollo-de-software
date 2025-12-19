@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <link rel="stylesheet" href="style/main.css">
+
+
+</head>
+<body>
+
+    <header>
+        <header class="header">
+        <div class="header-izquierda">
+            <img src="./images/logo.jpg" alt="Logo" class="logo-header">
+            <span class="brand-title">ALQUILER DE CANCHAS</span>
+        </div>
+
+        <nav class="header-derecho">
+            <a href="index.html">Inicio</a>
+            <a href="mis_reservas.html">Mis reservas</a>
+            <a href="lista_precios.html">Canchas</a>
+            <a href="reseñas.html">Reseñas</a>
+            <a href="login.html">Iniciar Sesión</a>
+        </nav>
+    </header>
+    
+    <div class="contenedor-principal">
+
+        <div class="lado-imagen">
+            <div class="contenedor_tabla"> 
+                <table class="table">
+                    <thead>      
+                        <tr>        
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="lista_usuarios"> 
+                        
+                        
+                    </tbody>
+                </table>
+                
+            </div>
+
+            <div class="contenedor_tabla"> 
+                <table class="table">
+                    <thead>      
+                        <tr>        
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Precio por hora</th>
+                        <th>ubicacion</th>
+                        <th>capacidad</th>
+                        <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="lista_canchas"> 
+                        
+                        
+                    </tbody>
+                </table>
+                
+            </div>
+            
+            <div class="contenedor_tabla"> 
+                <table class="table">
+                    <thead>      
+                        <tr>        
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Hora inicio</th>
+                        <th>Hora fin</th>
+                        <th>Costo total</th>
+                        <th>Cancha</th>
+                        <th>Usuario</th>
+                        <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="lista_reservas"> 
+                        
+                        
+                    </tbody>
+                </table>
+                
+            </div>
+
+
+
+        </div>
+
+        <div class="lado-login">
+            <div class="login-caja">
+                <h1 class="titulo-login is-size-2 has-text-centered">Editar sesion</h1>
+                <form class="box" id="form-editar-usuario">
+                    <input type="hidden" id="edit-id">
+                    <div class="field">
+                        <label class="label">Nombre</label>
+                        <input id="edit-nombre"  class="input" type="nombre" placeholder="ej: Franco Colapinto" />
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <input id="edit-email"    class="input" type="email" placeholder="ej: usuario@dominio.com" />
+                    </div>
+                    <div class="field">
+                        <label class="label">Telefono</label>
+                        <input id="edit-telefono"  class="input" type="telefono" placeholder="ej: 1123456789" />
+                    </div>
+                    <div class="field">
+                        <label class="label">password</label>
+                        <input id="edit-password"  class="input" type="password" placeholder="ej:*********** " />
+                    </div>
+
+
+                    <button class="button is-primary" type="button" onclick="editarUsuario()">Confirmar</button>
+
+                </form>
+            </div>
+            
+            <div class="login-caja">
+                <h1 class="titulo-login is-size-2 has-text-centered">Editar Cancha</h1>
+                <form class="box" id="form-editar-cancha">
+                    <input type="hidden" id="edit-cancha-id">
+                    <div class="field">
+                        <label class="label">Nombre</label>
+                        <input id="edit-cancha-nombre"  class="input" type="nombre" placeholder="ej: cancha del sur" />
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Tipo</label>
+                        <input id="edit-cancha-tipo"    class="input" type="email" placeholder="ej:Futbol 5" />
+                    </div>
+                    <div class="field">
+                        <label class="label">Ubicacion</label>
+                        <input id="edit-cancha-ubicacion"  class="input" type="telefono" placeholder="ej: av.rivadavia 2345" />
+                    </div>
+                    <div class="field">
+                        <label class="label">Precio por hora</label>
+                        <input id="edit-cancha-precio"  class="input" type="number" placeholder="ej: 1000 " />
+                    </div>
+                    <div class="field">
+                        <label class="label">Capacidad</label>
+                        <input id="edit-cancha-capacidad"  class="input" type="number" placeholder="ej:  10 " />
+                    </div>
+
+                    <button class="button is-primary" type="button" onclick="editar_cancha()">Confirmar</button>
+
+                </form>
+            </div>
+
+            <div class="login-caja">
+                <h1 class="titulo-login is-size-2 has-text-centered">Crear Cancha</h1>
+                <form class="box" id="form-crear-cancha">
+                    <div class="field">
+                        <label class="label">Nombre</label>
+                        <input id="crear-cancha-nombre"  class="input" type="nombre" placeholder="ej: Franco Colapinto" />
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Tipo</label>
+                        <input id="crear-cancha-tipo"    class="input" type="email" placeholder="ej:volley" />
+                    </div>
+                    <div class="field">
+                        <label class="label">Ubicacion</label>
+                        <input id="crear-cancha-ubicacion"  class="input" type="telefono" placeholder="ej: av.rivadavia 1256" />
+                    </div>
+                    <div class="field">
+                        <label class="label">Precio por hora</label>
+                        <input id="crear-cancha-precio"  class="input" type="number" placeholder="ej: 10000 " />
+                    </div>
+                    <div class="field">
+                        <label class="label">Capacidad</label>
+                        <input id="crear-cancha-capacidad"  class="input" type="number" placeholder="ej: 11 " />
+                    </div>
+
+                    <button class="button is-primary" type="button" onclick="crear_cancha()">Crear</button>
+
+                </form>
+            </div>
+
+
+        </div>
+
+    </div>
+    
+    
+    <footer class="footer has-text-light">
+        <div class="container">
+            <div class="columns is-variable is-8">
+
+                <div class="column">
+                    <h3 class="title is-5 has-text-white">SportRent</h3>
+                    <p>Alquiler de canchas deportivas para fútbol, pádel y más. Reservá fácil, rápido y desde cualquier dispositivo.</p>
+                </div>
+
+                <div class="column">
+                    <h3 class="title is-6 has-text-white">Navegación</h3>
+                    <ul>
+                        <li><a href="./index.html" class="has-text-light">Inicio</a></li>
+                        <li><a href="" class="has-text-light">Canchas</a></li>
+                        <li><a href="./reservas.html" class="has-text-light">Reservar</a></li>
+                        <li><a href="./galeria.html" class="has-text-light">Galería</a></li>
+                        <li><a href="#" class="has-text-light">Contacto</a></li>
+                    </ul>
+                </div>
+
+    
+                <div class="column">
+                    <h3 class="title is-6 has-text-white">Contacto</h3>
+                    <p><i class="fas fa-phone-alt"></i> +54 11 2706-8818</p>
+                    <p><i class="fas fa-envelope"></i> contacto@fi.uba.ar</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Buenos Aires, Argentina</p>
+                </div>
+
+    
+                <div class="column">
+                    <h3 class="title is-6 has-text-white">Seguinos</h3>
+                    <p class="icons">
+                        <a href="#" class="icon has-text-light is-large"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="icon has-text-light is-large"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="icon has-text-light is-large"><i class="fab fa-twitter"></i></a>
+                    </p>
+                </div>
+
+            </div>
+
+            <hr class="has-background-grey">
+                <div class="has-text-centered">
+                    <p class="is-size-7">© 2025 Fideos con tuco. Todos los derechos reservados.</p>
+                </div>
+            </div>
+    </footer>
+    
+    <script src="./js/administrador.js"></script>
+    <script>
+        obtenerListaUsuarios();
+        mostrarCanchasEnTabla();
+        mostrar_reservas();
+    </script>
+</body>
+</html>
+
