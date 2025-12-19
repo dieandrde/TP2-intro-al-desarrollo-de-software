@@ -4,7 +4,7 @@ async function obtenerListaUsuarios() {
     
     if (!token) {
         alert('Debe iniciar sesión para ver esta lista.');
-        window.location.href = 'login.html';
+        window.location.href = '/login.html';
         return;
     }
 
