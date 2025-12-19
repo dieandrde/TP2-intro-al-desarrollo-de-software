@@ -183,3 +183,13 @@ async function mostrarCanchasEnTabla() {
     }
 }
 
+
+function preparar_edicion_canchas(cancha) {
+    document.getElementById('edit-cancha-id').value = cancha.id;
+    document.getElementById('edit-cancha-nombre').value = cancha.nombre;
+    document.getElementById('edit-cancha-tipo').value = cancha.tipo;
+    document.getElementById('edit-cancha-ubicacion').value = cancha.ubicacion;
+    document.getElementById('edit-cancha-precio').value = cancha.precio_por_hora;
+    document.getElementById('edit-cancha-capacidad').value = cancha.capacidad;
+}
+
