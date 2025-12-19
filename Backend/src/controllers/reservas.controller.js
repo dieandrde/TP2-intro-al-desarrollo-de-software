@@ -2,8 +2,14 @@ import { pool } from "../db/db.js";
 import { canchaDisponible } from "../services/disponibilidad.service.js";
 
 const calcularCosto = (inicio, fin, precio) => {
-    const [h1, m1] = inicio.split(':').map(Number);
-    const [h2, m2] = fin.split(':').map(Number);
+    const partesInicio = inicio.split(':'); 
+    const partesFin = fin.split(':');
+    const h1 = parseInt(partesInicio[0]);
+    const m1 = parseInt(partesInicio[1]);
+
+    const h2 = parseInt(partesFin[0]);
+    const m2 = parseInt(partesFin[1]);
+
     const horas = (h2 + m2 / 60) - (h1 + m1 / 60);
     return horas * (precio || 5000);
 };
