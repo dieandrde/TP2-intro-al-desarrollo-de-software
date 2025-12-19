@@ -20,13 +20,22 @@ async function cargarCanchas() {
 
         canchas.forEach(cancha => {
             
-            const nombreImagen = cancha.tipo
-                .toLowerCase()                             // Todo a minúsculas
-                .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Quitamos tildes (Fútbol -> Futbol)
-                .replace(/\s+/g, "_");                     // Espacios por guiones bajos
+            const deporteLimpio = cancha.tipo
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/\s+/g, "_");
 
-            const rutaFinal = `./images/${nombreImagen}.jpg`;
-            contenedor.innerHTML += `
+            // 2. Lista de fotos que REALMENTE tienes en tu carpeta /images
+            const imagenesDisponibles = ['futbol', 'tenis', 'padel', 'basquet', 'voley'];
+
+            // 3. Verificamos si la foto existe, sino usamos la genérica
+            const imagenFinal = imagenesDisponibles.includes(deporteLimpio) 
+                ? deporteLimpio 
+                : 'default_cancha';
+
+            const rutaFinal = `./images/${imagenFinal}.jpg`;
+                        contenedor.innerHTML += `
                 <div class="caja">
                     <div class="cancha-imagen">
                         <img src="${rutaFinal}" 

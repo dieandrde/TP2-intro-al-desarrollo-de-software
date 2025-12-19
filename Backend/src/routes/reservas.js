@@ -105,7 +105,14 @@ router.post("/reservas", verifyToken, async (req, res) => {
         if (duracionHoras <= 0) {
             return res.status(400).json({ mensaje: "La hora de fin debe ser posterior al inicio." });
         }
+        const apertura = moment(`${fecha} 08:00`, "YYYY-MM-DD HH:mm");
+        const cierre = moment(`${fecha} 22:00`, "YYYY-MM-DD HH:mm");
 
+        if (inicio.isBefore(apertura) || fin.isAfter(cierre)) {
+            return res.status(400).json({ 
+                mensaje: "Solo se permiten reservas entre las 08:00 y las 22:00." 
+            });
+        }
         // --- 3. CÁLCULO DE COSTO REAL (Backend maneja el precio) ---
         const canchaInfo = await pool.query("SELECT precio_por_hora FROM canchas WHERE id = $1", [cancha_id]);
         
@@ -213,6 +220,15 @@ router.put("/reservas/:id", verifyToken, async (req, res) => {
 
         if (duracionHoras <= 0) {
             return res.status(400).json({ mensaje: "La hora de fin debe ser posterior al inicio." });
+        }
+
+        const apertura = moment(`${fecha} 08:00`, "YYYY-MM-DD HH:mm");
+        const cierre = moment(`${fecha} 22:00`, "YYYY-MM-DD HH:mm");
+
+        if (inicio.isBefore(apertura) || fin.isAfter(cierre)) {
+            return res.status(400).json({ 
+                mensaje: "Solo se permiten reservas entre las 08:00 y las 22:00." 
+            });
         }
 
         // 3. RE-CALCULAR COSTO (En caso de que cambien de cancha o de horario)
