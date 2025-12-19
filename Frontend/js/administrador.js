@@ -4,8 +4,7 @@ async function obtenerListaUsuarios() {
     
     if (!token) {
         alert('Debe iniciar sesión para ver esta lista.');
-        // Opcional: Redirigir al login
-        // window.location.href = 'login.html';
+        window.location.href = 'login.html';
         return;
     }
 
@@ -59,7 +58,8 @@ async function obtenerListaUsuarios() {
                     <td>${user.id}</td>
                     <td>${user.nombre}</td>
                     <td>${user.email}</td>
-                    <td>${user.telefono}</td> <td>
+                    <td>${user.telefono}</td> 
+                    <td>
                     <button class="button is-link" type="button" onclick="prepararEdicion(${JSON.stringify(user).replace(/"/g, '&quot;')})" >Editar</button>
                     <button class="button  is-danger" type="button" onclick="eliminarUsuario(${user.id})" >Eliminar</button>
                     </td>
