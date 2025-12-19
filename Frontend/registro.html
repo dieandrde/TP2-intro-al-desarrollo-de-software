@@ -43,23 +43,28 @@
         <!--login -->
         <div class="lado-login">
             <div class="login-caja">
-                <h1 class="titulo-login is-size-2 has-text-centered">Iniciar Sesión</h1>
-                <form class="box"  >
+                <h1 class="titulo-login is-size-2 has-text-centered">Registro</h1>
+                <form class="box" >
+                    <div class="field">
+                        <label class="label">Nombre</label>
+                        <input id="form-nombre"   class="input" type="nombre" placeholder="ej: Carlos intro" />
+                    </div>
                     <div class="field">
                         <label class="label">Email</label>
-                        <input id="login-email"  class="input" type="email" placeholder="ej: deandrade@fi.uba.ar" />
+                        <input id="form-email" class="input" type="email" placeholder="ej: usuario@dominio.com" />
                     </div>
-
+                    <div class="field">
+                        <label class="label">Telefono</label>
+                        <input id="form-telefono"   class="input" type="telefono" placeholder="ej: 1126789201" />
+                    </div>
                     <div class="field">
                         <label class="label">Contraseña</label>
-                        <input id="login-password"    class="input" type="password" placeholder="********" />
+                        <input id="form-contraseña"  class="input" type="password" placeholder="********" />
                     </div>
 
-                    <button class="button is-primary" type="button" onclick="iniciarSesion()">Iniciar Sesión</button>
-
-
-                    <div class="registrarse">
-                        ¿Primera vez?<a href="registro.html"> ¡Registrate!</a>
+                    <button class="button is-primary" type="button" onclick="registrarUsuario()">Registrarte</button>
+                    <div class="sesion">
+                        ¿Ya tienes una cuenta?<a href="login.html"> Inicia sesion</a>
                     </div>
                 </form>
             </div>
@@ -115,6 +120,6 @@
             </div>
     </footer>
     
-    <script src="js/login.js"></script>
+    <script src="js/registro.js"></script>
 </body>
 </html>

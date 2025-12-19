@@ -1,3 +1,275 @@
+
+async function obtenerListaUsuarios() {
+    const token = localStorage.getItem('jwtToken');
+    
+    if (!token) {
+        alert('Debe iniciar sesión para ver esta lista.');
+        // Opcional: Redirigir al login
+        // window.location.href = 'login.html';
+        return;
+    }
+
+    // 1. Declarar tabla_body ANTES del try/catch
+    const tabla_body = document.getElementById('lista_usuarios');
+    
+    if (!tabla_body) {
+        console.error("El elemento con ID 'lista_usuarios' no fue encontrado en el DOM.");
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:3000/usuarios', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        
+        // 2. Manejo de Errores HTTP
+        if (!response.ok) {
+            const errorData = await response.json(); // Intentamos leer el mensaje de error del Backend
+            
+            if (response.status === 403) {
+                 alert('Acceso denegado. No eres administrador.');
+            } else if (response.status === 401) {
+                 alert('Sesión expirada. Inicie sesión de nuevo.');
+            } else {
+                 alert(`Error al cargar usuarios: ${errorData.message || response.statusText}`);
+            }
+            // Limpiamos o mostramos mensaje de error
+            tabla_body.innerHTML = '<tr><td colspan="5">Error al cargar usuarios.</td></tr>';
+            return;
+        }
+        
+        // 3. Bloque de ÉXITO
+        // Declarar 'usuarios' como const DENTRO de este bloque es seguro
+        const usuarios = await response.json(); 
+        
+        // Limpiar la tabla y llenarla
+        tabla_body.innerHTML = ''; 
+
+        if (usuarios.length === 0) {
+            tabla_body.innerHTML = '<tr><td colspan="5">No hay usuarios registrados (aparte del administrador).</td></tr>';
+            return;
+        }
+
+        usuarios.forEach(user => {
+            tabla_body.innerHTML += `
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.nombre}</td>
+                    <td>${user.email}</td>
+                    <td>${user.telefono}</td> <td>
+                    <button class="button is-link" type="button" onclick="prepararEdicion(${JSON.stringify(user).replace(/"/g, '&quot;')})" >Editar</button>
+                    <button class="button  is-danger" type="button" onclick="eliminarUsuario(${user.id})" >Eliminar</button>
+                    </td>
+                </tr>
+            `;
+        });
+        
+    } catch (error) {
+        // Captura errores de red (si el servidor está caído)
+        console.error('Error de red al obtener usuarios:', error);
+        alert('Error de conexión con el servidor.');
+    }
+}
+
+function prepararEdicion(user) {
+
+    document.getElementById('edit-id').value = user.id;
+    document.getElementById('edit-nombre').value = user.nombre;
+    document.getElementById('edit-email').value = user.email;
+    document.getElementById('edit-telefono').value = user.telefono;
+}
+
+
+async function editarUsuario() {
+    const id = document.getElementById('edit-id').value;
+    const token = localStorage.getItem('jwtToken');
+
+    const nombre = document.getElementById('edit-nombre').value;
+    const email = document.getElementById('edit-email').value;
+    const telefono = document.getElementById('edit-telefono').value;
+    const password = document.getElementById('edit-password').value;
+    
+
+    const resp = await fetch(`http://localhost:3000/usuarios/${id}`, {
+        method: 'PUT',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` 
+        },
+        body: JSON.stringify({ nombre, email, telefono, password })
+    });
+
+    if (resp.ok) {
+        alert("Actualizado con éxito");
+        obtenerListaUsuarios();
+
+        const form = document.getElementById('form-editar-usuario'); 
+        if (form) {
+            form.reset();
+        }
+
+    }
+}
+
+
+
+async function eliminarUsuario(id) {
+    if (!confirm("¿Seguro que quieres eliminar este usuario?")) return;
+
+    const token = localStorage.getItem('jwtToken');
+    const resp = await fetch(`http://localhost:3000/usuarios/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (resp.ok) {
+        obtenerListaUsuarios(); // Refrescar la tabla
+    }
+}
+
+
+
+
+async function mostrarCanchasEnTabla() {
+    const body_canchas = document.getElementById('lista_canchas');
+    
+    try {
+        const respuesta = await fetch('http://localhost:3000/canchas');
+        
+        if (!respuesta.ok) {
+            throw new Error(`Error al obtener datos: ${respuesta.status}`);
+        }
+
+        const canchas = await respuesta.json();
+
+        // Limpiamos el cuerpo de la tabla
+        body_canchas.innerHTML = ""; 
+
+        if (canchas.length === 0) {
+            cuerpoTabla.innerHTML = "<tr><td colspan='6' class='has-text-centered'>No hay canchas registradas.</td></tr>";
+            return;
+        }
+
+        // Recorremos las canchas y creamos las filas
+        canchas.forEach(cancha => {
+            body_canchas.innerHTML += `
+                <tr>
+                    <td><strong>${cancha.id}</strong></td>
+                    <td>${cancha.nombre}</td>
+                    <td>${cancha.tipo}</td>
+                    <td>$${cancha.precio_por_hora}</td>
+                    <td>${cancha.ubicacion}</td>
+                    <td>${cancha.capacidad} personas</td>
+                    <td>
+                        <button class="button is-link" type="button" onclick="preparar_edicion_canchas(${JSON.stringify(cancha).replace(/"/g, '&quot;')})" >Editar</button>
+                        <button class="button  is-danger" type="button" onclick="eliminar_cancha(${cancha.id})" >Eliminar</button>
+                    </td>
+                </tr>
+            `;
+        });
+
+    } catch (error) {
+        console.error("Error al llenar la tabla:", error);
+    }
+}
+
+
+
+
+function preparar_edicion_canchas(cancha) {
+
+    document.getElementById('edit-cancha-id').value = cancha.id;
+    document.getElementById('edit-cancha-nombre').value = cancha.nombre;
+    document.getElementById('edit-cancha-tipo').value = cancha.tipo;
+    document.getElementById('edit-cancha-ubicacion').value = cancha.ubicacion;
+    document.getElementById('edit-cancha-precio').value = cancha.precio_por_hora;
+    document.getElementById('edit-cancha-capacidad').value = cancha.capacidad;
+}
+
+
+async function editar_cancha() {
+    const id = document.getElementById('edit-cancha-id').value;
+    const token = localStorage.getItem('jwtToken');
+
+    const nombre = document.getElementById('edit-cancha-nombre').value;
+    const tipo = document.getElementById('edit-cancha-tipo').value;
+    const ubicacion = document.getElementById('edit-cancha-ubicacion').value;
+    const precio_por_hora = document.getElementById('edit-cancha-precio').value;
+    const capacidad = document.getElementById('edit-cancha-capacidad').value;
+    
+
+    const resp = await fetch(`http://localhost:3000/canchas/${id}`, {
+        method: 'PUT',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` 
+        },
+        body: JSON.stringify({ nombre, tipo, ubicacion, precio_por_hora, capacidad })
+    });
+
+    if (resp.ok) {
+        alert("Actualizado con éxito");
+        mostrarCanchasEnTabla();
+
+        const form = document.getElementById('form-editar-cancha'); 
+        if (form) {
+            form.reset();
+        }
+
+    }
+}
+
+
+async function eliminar_cancha(id) {
+    if (!confirm("¿Seguro que quieres eliminar esta cancha?")) return;
+
+    const token = localStorage.getItem('jwtToken');
+    const resp = await fetch(`http://localhost:3000/canchas/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (resp.ok) {
+        mostrarCanchasEnTabla(); // Refrescar la tabla
+    }
+}
+
+
+
+async function crear_cancha() {
+    const token = localStorage.getItem('jwtToken');
+
+    const nombre = document.getElementById('crear-cancha-nombre').value;
+    const tipo = document.getElementById('crear-cancha-tipo').value;
+    const ubicacion = document.getElementById('crear-cancha-ubicacion').value;
+    const precio_por_hora = document.getElementById('crear-cancha-precio').value;
+    const capacidad = document.getElementById('crear-cancha-capacidad').value;
+    
+
+    const resp = await fetch(`http://localhost:3000/canchas`, {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` 
+        },
+        body: JSON.stringify({ nombre, tipo, ubicacion, precio_por_hora, capacidad })
+    });                     
+    if (resp.ok) {
+        alert("Cancha creada con éxito");
+        mostrarCanchasEnTabla();
+
+        const form = document.getElementById('form-crear-cancha'); 
+        if (form) {
+            form.reset();
+        }
+
+    }       
+}
+
+
 async function mostrar_reservas() {
     const body_reservas = document.getElementById('lista_reservas');
     const token = localStorage.getItem('jwtToken');
@@ -95,131 +367,6 @@ async function eliminar_reserva(id) {
     }
 }
 
-async function crear_cancha() {
-    const token = localStorage.getItem('jwtToken');
-
-    const nombre = document.getElementById('crear-cancha-nombre').value;
-    const tipo = document.getElementById('crear-cancha-tipo').value;
-    const ubicacion = document.getElementById('crear-cancha-ubicacion').value;
-    const precio_por_hora = document.getElementById('crear-cancha-precio').value;
-    const capacidad = document.getElementById('crear-cancha-capacidad').value;
-    
-
-    const resp = await fetch(`http://localhost:3000/canchas`, {
-        method: 'POST',
-        headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}` 
-        },
-        body: JSON.stringify({ nombre, tipo, ubicacion, precio_por_hora, capacidad })
-    });                     
-    if (resp.ok) {
-        alert("Cancha creada con éxito");
-        mostrarCanchasEnTabla();
-
-        const form = document.getElementById('form-crear-cancha'); 
-        if (form) {
-            form.reset();
-        }
-
-    }       
-}
-
-async function eliminar_cancha(id) {
-    if (!confirm("¿Seguro que quieres eliminar esta cancha?")) return;
-
-    const token = localStorage.getItem('jwtToken');
-    const resp = await fetch(`http://localhost:3000/canchas/${id}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
-    });
-
-    if (resp.ok) {
-        mostrarCanchasEnTabla(); // Refrescar la tabla
-    }
-}
-
-async function mostrarCanchasEnTabla() {
-    const body_canchas = document.getElementById('lista_canchas');
-    
-    try {
-        const respuesta = await fetch('http://localhost:3000/canchas');
-        
-        if (!respuesta.ok) {
-            throw new Error(`Error al obtener datos: ${respuesta.status}`);
-        }
-
-        const canchas = await respuesta.json();
-
-        body_canchas.innerHTML = ""; 
-
-        if (canchas.length === 0) {
-            body_canchas.innerHTML =
-                "<tr><td colspan='7' class='has-text-centered'>No hay canchas registradas.</td></tr>";
-            return;
-        }
-
-        canchas.forEach(cancha => {
-            body_canchas.innerHTML += `
-                <tr>
-                    <td><strong>${cancha.id}</strong></td>
-                    <td>${cancha.nombre}</td>
-                    <td>${cancha.tipo}</td>
-                    <td>$${cancha.precio_por_hora}</td>
-                    <td>${cancha.ubicacion}</td>
-                    <td>${cancha.capacidad} personas</td>
-                    <td>
-                        <button class="button is-link"
-                            onclick="preparar_edicion_canchas(${JSON.stringify(cancha).replace(/"/g, '&quot;')})">
-                            Editar
-                        </button>
-                    </td>
-                </tr>
-            `;
-        });
-
-    } catch (error) {
-        console.error("Error al llenar la tabla:", error);
-    }
-}
 
 
-function preparar_edicion_canchas(cancha) {
-    document.getElementById('edit-cancha-id').value = cancha.id;
-    document.getElementById('edit-cancha-nombre').value = cancha.nombre;
-    document.getElementById('edit-cancha-tipo').value = cancha.tipo;
-    document.getElementById('edit-cancha-ubicacion').value = cancha.ubicacion;
-    document.getElementById('edit-cancha-precio').value = cancha.precio_por_hora;
-    document.getElementById('edit-cancha-capacidad').value = cancha.capacidad;
-}
-
-async function editar_cancha() {
-    const id = document.getElementById('edit-cancha-id').value;
-    const token = localStorage.getItem('jwtToken');
-
-    const nombre = document.getElementById('edit-cancha-nombre').value;
-    const tipo = document.getElementById('edit-cancha-tipo').value;
-    const ubicacion = document.getElementById('edit-cancha-ubicacion').value;
-    const precio_por_hora = document.getElementById('edit-cancha-precio').value;
-    const capacidad = document.getElementById('edit-cancha-capacidad').value;
-
-    const resp = await fetch(`http://localhost:3000/canchas/${id}`, {
-        method: 'PUT',
-        headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}` 
-        },
-        body: JSON.stringify({ nombre, tipo, ubicacion, precio_por_hora, capacidad })
-    });
-
-    if (resp.ok) {
-        alert("Actualizado con éxito");
-        mostrarCanchasEnTabla();
-
-        const form = document.getElementById('form-editar-cancha'); 
-        if (form) {
-            form.reset();
-        }
-    }
-}
 
