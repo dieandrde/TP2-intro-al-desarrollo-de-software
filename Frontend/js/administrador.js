@@ -94,3 +94,34 @@ async function eliminar_reserva(id) {
         alert("Ocurrió un error al intentar conectar con el servidor.");
     }
 }
+
+async function crear_cancha() {
+    const token = localStorage.getItem('jwtToken');
+
+    const nombre = document.getElementById('crear-cancha-nombre').value;
+    const tipo = document.getElementById('crear-cancha-tipo').value;
+    const ubicacion = document.getElementById('crear-cancha-ubicacion').value;
+    const precio_por_hora = document.getElementById('crear-cancha-precio').value;
+    const capacidad = document.getElementById('crear-cancha-capacidad').value;
+    
+
+    const resp = await fetch(`http://localhost:3000/canchas`, {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` 
+        },
+        body: JSON.stringify({ nombre, tipo, ubicacion, precio_por_hora, capacidad })
+    });                     
+    if (resp.ok) {
+        alert("Cancha creada con éxito");
+        mostrarCanchasEnTabla();
+
+        const form = document.getElementById('form-crear-cancha'); 
+        if (form) {
+            form.reset();
+        }
+
+    }       
+}
+
