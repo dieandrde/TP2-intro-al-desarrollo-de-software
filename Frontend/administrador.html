@@ -50,6 +50,52 @@
                 </table>
                 
             </div>
+
+            <div class="contenedor_tabla"> 
+                <table class="table">
+                    <thead>      
+                        <tr>        
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Precio por hora</th>
+                        <th>ubicacion</th>
+                        <th>capacidad</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="lista_canchas"> 
+                        
+                        
+                    </tbody>
+                </table>
+                
+            </div>
+            
+            <div class="contenedor_tabla"> 
+                <table class="table">
+                    <thead>      
+                        <tr>        
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Hora inicio</th>
+                        <th>Hora fin</th>
+                        <th>Costo total</th>
+                        <th>Cancha</th>
+                        <th>Usuario</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="lista_reservas"> 
+                        
+                        
+                    </tbody>
+                </table>
+                
+            </div>
+
+
+
         </div>
 
         <div class="lado-login">
@@ -80,6 +126,69 @@
 
                 </form>
             </div>
+            
+            <div class="login-caja">
+                <h1 class="titulo-login is-size-2 has-text-centered">Editar Cancha</h1>
+                <form class="box" id="form-editar-cancha">
+                    <input type="hidden" id="edit-cancha-id">
+                    <div class="field">
+                        <label class="label">Nombre</label>
+                        <input id="edit-cancha-nombre"  class="input" type="nombre" placeholder="ej: cancha del sur" />
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Tipo</label>
+                        <input id="edit-cancha-tipo"    class="input" type="email" placeholder="ej:Futbol 5" />
+                    </div>
+                    <div class="field">
+                        <label class="label">Ubicacion</label>
+                        <input id="edit-cancha-ubicacion"  class="input" type="telefono" placeholder="ej: av.rivadavia 2345" />
+                    </div>
+                    <div class="field">
+                        <label class="label">Precio por hora</label>
+                        <input id="edit-cancha-precio"  class="input" type="number" placeholder="ej: 1000 " />
+                    </div>
+                    <div class="field">
+                        <label class="label">Capacidad</label>
+                        <input id="edit-cancha-capacidad"  class="input" type="number" placeholder="ej:  10 " />
+                    </div>
+
+                    <button class="button is-primary" type="button" onclick="editar_cancha()">Confirmar</button>
+
+                </form>
+            </div>
+
+            <div class="login-caja">
+                <h1 class="titulo-login is-size-2 has-text-centered">Crear Cancha</h1>
+                <form class="box" id="form-crear-cancha">
+                    <div class="field">
+                        <label class="label">Nombre</label>
+                        <input id="crear-cancha-nombre"  class="input" type="nombre" placeholder="ej: Franco Colapinto" />
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Tipo</label>
+                        <input id="crear-cancha-tipo"    class="input" type="email" placeholder="ej: usuario2dominio.com" />
+                    </div>
+                    <div class="field">
+                        <label class="label">Ubicacion</label>
+                        <input id="crear-cancha-ubicacion"  class="input" type="telefono" placeholder="ej: 1123456789" />
+                    </div>
+                    <div class="field">
+                        <label class="label">Precio por hora</label>
+                        <input id="crear-cancha-precio"  class="input" type="number" placeholder="ej: 12 " />
+                    </div>
+                    <div class="field">
+                        <label class="label">Capacidad</label>
+                        <input id="crear-cancha-capacidad"  class="input" type="number" placeholder="ej: 12 " />
+                    </div>
+
+                    <button class="button is-primary" type="button" onclick="crear_cancha()">Crear</button>
+
+                </form>
+            </div>
+
+
         </div>
 
     </div>
@@ -134,7 +243,9 @@
     
     <script src="./js/administrador.js"></script>
     <script>
-      obtenerListaUsuarios();
+        obtenerListaUsuarios();
+        mostrarCanchasEnTabla();
+        mostrar_reservas();
     </script>
 </body>
 </html>
