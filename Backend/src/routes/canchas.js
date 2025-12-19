@@ -70,5 +70,41 @@ router.post("/canchas", verifyToken, requireAdmin, async (req, res) => {
     }
 });
 
+router.put("/canchas/:id", verifyToken, requireAdmin, async (req, res) => {
+    const id = req.params.id;
+    const { nombre, tipo, precio_por_hora, ubicacion, capacidad } = req.body;
+
+    try {
+        const UPDATE_CANCHA = `
+        UPDATE canchas
+        SET nombre = $1,
+            tipo = $2,
+            precio_por_hora = $3,
+            ubicacion = $4,
+            capacidad = $5
+        WHERE id = $6
+        RETURNING *;
+        `;
+
+        const resultado = await pool.query(UPDATE_CANCHA, [
+            nombre,
+            tipo,
+            precio_por_hora,
+            ubicacion,
+            capacidad,
+            id
+        ]);
+
+        if (resultado.rowCount === 0) {
+            return res.status(404).json({ mensaje: "no se encontro la cancha" });
+        }
+
+        res.json(resultado.rows[0]);
+    } catch (error) {
+        console.error("error al actualizar cancha:", error);
+        res.status(500).json({ mensaje: "error interno del servidor" });
+    }
+});
+
 
 export default router;
