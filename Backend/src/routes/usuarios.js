@@ -245,7 +245,6 @@ router.post("/login", async (req, res) => {
         if (!passwordMatch) {
             return res.status(401).json({ message: "Credenciales incorrectas." });
         }
-
         const token = jwt.sign(
             { 
                 id: user.id, 
