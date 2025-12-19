@@ -300,3 +300,28 @@ router.delete("/reservas/:id", verifyToken, async (req, res) => {
         res.status(500).json({ mensaje: "Error interno del servidor al intentar cancelar la reserva." });
     }
 });
+
+//me devuelve las reservas del usuario logueado
+router.get("/mis_reservas", verifyToken, async (req, res) => {
+    const usuario_id = req.user.id; // Extraído del token por el middleware verifyToken
+
+    try {
+        const query = `
+            SELECT 
+                r.id, r.fecha, r.hora_inicio, r.hora_fin, r.costo_total, r.cancha_id,
+                c.nombre AS cancha_nombre
+            FROM reservas r
+            JOIN canchas c ON r.cancha_id = c.id
+            WHERE r.usuario_id = $1
+            ORDER BY r.fecha DESC;
+        `;
+        const resultado = await pool.query(query, [usuario_id]);
+        res.json(resultado.rows);
+    } catch (error) {
+        console.error("Error al obtener mis reservas:", error);
+        res.status(500).json({ mensaje: "Error al obtener tus reservas." });
+    }
+});
+
+
+export default router;
