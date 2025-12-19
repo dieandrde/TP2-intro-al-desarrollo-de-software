@@ -1,0 +1,79 @@
+
+@import url("header.css");
+
+body {
+    background-color: #1a4f1a;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.titulo-confirmar {
+    margin-top: 100px; 
+    color: white;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+}
+
+/* El contenedor principal usando el estilo  */
+.grid-reservas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+    gap: 25px;
+    width: 100%;
+}
+
+.card-reserva {
+    background-color: white;
+    border: 3px solid #00a83c;
+    border-radius: 15px;
+    width: 320px; 
+    padding: 15px;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.card-reserva img {
+    width: 60px;
+    margin-right: 20px;
+}
+
+.info-reserva h3 {
+    color: #1a4f1a;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.info-reserva p {
+    color: #333;
+    font-size: 0.95rem;
+    margin: 3px 0;
+}
+
+/* Botones con los colores de Bulma del equipo */
+.acciones {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-modificar {
+    background-color: #333; /* Gris oscuro */
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-eliminar {
+    background-color: #c0392b; /* Rojo para borrar */
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
