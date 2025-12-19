@@ -254,3 +254,49 @@ router.put("/reservas/:id", verifyToken, async (req, res) => {
     }
 });    
 
+router.delete("/reservas/:id", verifyToken, async (req, res) => {
+    const id = req.params.id;         // ID de la reserva a eliminar
+    const usuario_id_token = req.user.id; // ID extraído del JWT
+    const esAdmin = req.user.es_admin;      // ¿Es administrador?
+
+    try {
+        // 1. BUSCAR LA RESERVA para saber quién es el dueño
+        const reservaExistente = await pool.query(
+            "SELECT usuario_id FROM reservas WHERE id = $1", 
+            [id]
+        );
+
+        // Si la reserva no existe, devolvemos 404
+        if (reservaExistente.rowCount === 0) {
+            return res.status(404).json({ mensaje: "No se encontró la reserva con ese ID." });
+        }
+
+        const dueñoDeLaReserva = reservaExistente.rows[0].usuario_id;
+
+        //  2. VALIDACIÓN DE SEGURIDAD (Propiedad o Admin)
+        // Solo permitimos el DELETE si el que pide es el dueño O si es admin
+        if (dueñoDeLaReserva !== usuario_id_token && !esAdmin) {
+            return res.status(403).json({ 
+                mensaje: "No tienes permiso para cancelar esta reserva. Solo el dueño o un administrador pueden hacerlo." 
+            });
+        }
+
+        // 3. EJECUTAR LA ELIMINACIÓN (o cancelación)
+        const DELETE_RESERVA = `
+            DELETE FROM reservas
+            WHERE id = $1
+            RETURNING id;
+        `;
+        
+        await pool.query(DELETE_RESERVA, [id]);
+
+        // 200 OK: Éxito
+        res.status(200).json({ 
+            mensaje: `Reserva con ID ${id} cancelada exitosamente. El horario ha sido liberado.` 
+        });
+
+    } catch (error) {
+        console.error("Error al eliminar la reserva:", error);
+        res.status(500).json({ mensaje: "Error interno del servidor al intentar cancelar la reserva." });
+    }
+});
