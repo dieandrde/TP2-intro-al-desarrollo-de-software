@@ -6,8 +6,6 @@ import { verifyToken, requireAdmin } from '../middlewares/middlewares.js';
 dotenv.config();
 const router = Router();
 
-export default router;
-
 router.get("/canchas", async (req, res) => {
     try {
         const GET_CANCHAS = `
@@ -23,3 +21,5 @@ router.get("/canchas", async (req, res) => {
         res.status(500).json({ mensaje: "error interno del servidor" });
     }
 });
+
+export default router;
