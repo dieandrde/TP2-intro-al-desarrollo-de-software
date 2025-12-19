@@ -15,7 +15,6 @@ body {
     font-weight: bold;
 }
 
-/* El contenedor principal usando el estilo  */
 .grid-reservas {
     display: flex;
     flex-wrap: wrap;
@@ -53,7 +52,6 @@ body {
     margin: 3px 0;
 }
 
-/* Botones con los colores de Bulma del equipo */
 .acciones {
     margin-top: 12px;
     display: flex;
@@ -61,7 +59,7 @@ body {
 }
 
 .btn-modificar {
-    background-color: #333; /* Gris oscuro */
+    background-color: #333;
     color: white;
     border: none;
     padding: 6px 12px;
@@ -70,7 +68,7 @@ body {
 }
 
 .btn-eliminar {
-    background-color: #c0392b; /* Rojo para borrar */
+    background-color: #c0392b; 
     color: white;
     border: none;
     padding: 6px 12px;
