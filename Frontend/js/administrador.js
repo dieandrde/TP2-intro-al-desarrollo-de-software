@@ -193,3 +193,33 @@ function preparar_edicion_canchas(cancha) {
     document.getElementById('edit-cancha-capacidad').value = cancha.capacidad;
 }
 
+async function editar_cancha() {
+    const id = document.getElementById('edit-cancha-id').value;
+    const token = localStorage.getItem('jwtToken');
+
+    const nombre = document.getElementById('edit-cancha-nombre').value;
+    const tipo = document.getElementById('edit-cancha-tipo').value;
+    const ubicacion = document.getElementById('edit-cancha-ubicacion').value;
+    const precio_por_hora = document.getElementById('edit-cancha-precio').value;
+    const capacidad = document.getElementById('edit-cancha-capacidad').value;
+
+    const resp = await fetch(`http://localhost:3000/canchas/${id}`, {
+        method: 'PUT',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` 
+        },
+        body: JSON.stringify({ nombre, tipo, ubicacion, precio_por_hora, capacidad })
+    });
+
+    if (resp.ok) {
+        alert("Actualizado con éxito");
+        mostrarCanchasEnTabla();
+
+        const form = document.getElementById('form-editar-cancha'); 
+        if (form) {
+            form.reset();
+        }
+    }
+}
+
