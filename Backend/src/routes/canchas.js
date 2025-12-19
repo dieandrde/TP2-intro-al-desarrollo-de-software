@@ -22,4 +22,28 @@ router.get("/canchas", async (req, res) => {
     }
 });
 
+router.get("/canchas/:id", async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const GET_CANCHA_BY_ID = `
+        SELECT id, nombre, tipo, precio_por_hora, ubicacion, capacidad
+        FROM canchas
+        WHERE id = $1;
+        `;
+
+        const resultado = await pool.query(GET_CANCHA_BY_ID, [id]);
+
+        if (resultado.rows.length === 0) {
+            return res.status(404).json({ mensaje: "la cancha no se encontro" });
+        }
+
+        res.json(resultado.rows[0]);
+    } catch (error) {
+        console.error("error al obtener cancha:", error);
+        res.status(500).json({ mensaje: "error interno del servidor" });
+    }
+});
+
+
 export default router;
