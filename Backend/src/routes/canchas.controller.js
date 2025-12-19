@@ -6,7 +6,7 @@ const {
     CREATE_CANCHA,
     UPDATE_CANCHA,
     DELETE_CANCHA
-} = require("../queries/canchas.queries");
+} = require("./canchas.queries");
 
 
 const obtener_canchas = async (req, res) => {

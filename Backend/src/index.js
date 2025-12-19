@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
-import { pool } from "./db/db.js";
+import dotenv from dotenv;
+
+
+dotenv.congif();
 
 const app = express();
 app.use(express.json());

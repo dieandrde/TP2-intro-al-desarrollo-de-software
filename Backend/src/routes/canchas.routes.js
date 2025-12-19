@@ -7,7 +7,7 @@ const {
     crear_cancha,
     actualizar_cancha,
     eliminar_cancha
-} = require("../controllers/canchas.controller");
+} = require("./canchas.controller");
 
 router.get("/", obtener_canchas);
 
