@@ -14,6 +14,16 @@ Este sistema es una plataforma integral para la gestión y reserva de canchas.
 1. Navegá a la carpeta del servidor:
    ```bash
    cd Backend
+   crear un archivo .env donde dentro tiene que tener esto:
+   DATABASE_URL=postgres://postgres:postgres@localhost:5432/fiumbr
+   url para que el backend se conecte a la base de datos
+   JWT_SECRET="intro2c2025" 
+   key para crear los token
+   ADMIN_EMAIL="admin@gmail.com"
+   email de administrador para que se cree un usuario administrador
+   ADMIN_PASSWORD="admin1234"
+   passwrod de administrador para que se cree un ususario administrador y es el el que se usa para iniciar sesion
+
 2. Levanta del docker compose:
    ```bash
    docker compose up -d
@@ -23,6 +33,8 @@ Este sistema es una plataforma integral para la gestión y reserva de canchas.
 4. Corre el servidor:
    ```bash
    npm run dev
+   npm run seed-db
+   //para que se cre el ususario administrador con el email y password anteriores
 ### 🔵 Levantar el Frontend
 1. Navega a la carpeta de la interfaz:
    ```bash
