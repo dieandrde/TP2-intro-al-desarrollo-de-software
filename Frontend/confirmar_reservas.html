@@ -32,7 +32,41 @@
         
         <div style="max-width: 900px; margin: 0 auto;">
             
+            <h1 class="title is-1 has-text-centered has-text-white mb-5">Gestión de Reservas</h1>
             
+            <section class="box" style="background: rgba(255,255,255,0.95); border-radius: 15px; padding: 25px; margin-bottom: 50px;">
+                <h2 class="title is-4 has-text-centered" style="color: #1a4f1a;">Nueva Reserva</h2>
+                <div class="columns is-vcentered">
+                    <div class="column">
+                        <label class="label is-small">Seleccionar Cancha</label>
+                        <div class="select is-fullwidth is-small">
+                            <select id="nueva-cancha">
+                                <option value="1">Fútbol 5 - Estadio</option>
+                                <option value="2">Fútbol 11 - Paseo Colón</option>
+                                <option value="3">Tenis - Ladrillo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <label class="label is-small">Fecha</label>
+                        <input class="input is-small" type="date" id="nueva-fecha">
+                    </div>
+                    <div class="column is-2">
+                        <label class="label is-small">Desde</label>
+                        <input class="input is-small" type="time" id="nueva-inicio">
+                    </div>
+                    <div class="column is-2">
+                        <label class="label is-small">Hasta</label>
+                        <input class="input is-small" type="time" id="nueva-fin">
+                    </div>
+                    <div class="column is-1">
+                        <label class="label is-small" style="visibility: hidden;">.</label>
+                        <button class="button is-success is-small is-fullwidth" onclick="crearNuevaReserva()">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
 
             <div class="has-text-centered">
                 <h2 class="title is-2 has-text-white mb-5">Mis Turnos Confirmados</h2>
