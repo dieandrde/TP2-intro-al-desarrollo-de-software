@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <link rel="stylesheet" href="style/login.css">
+    <link rel="stylesheet" href="style/header.css">
+    <link rel="stylesheet" href="style/style_index.css">
+    <link rel="stylesheet" href="style/administrador.css">
+
+</head>
+<body>
+
+    <header>
+        <header class="header">
+        <div class="header-izquierda">
+            <img src="./images/logo.jpg" alt="Logo" class="logo-header">
+            <span class="brand-title">ALQUILER DE CANCHAS</span>
+        </div>
+
+        <nav class="header-derecho">
+            <a href="index.html">Inicio</a>
+            <a href="mis_reservas.html">Mis reservas</a>
+            <a href="lista_precios.html">Canchas</a>
+            <a href="reseñas.html">Reseñas</a>
+            <a href="login.html">Iniciar Sesión</a>
+        </nav>
+    </header>
+    
+    <div class="contenedor-principal">
+
+        <div class="lado-imagen">
+            <div class="contenedor_tabla"> 
+                <table class="table">
+                    <thead>      
+                        <tr>        
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Hora inicio</th>
+                        <th>Hora fin</th>
+                        <th>Costo total</th>
+                        <th>Cancha</th>
+                        <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="lista_mis_reservas">
+                        
+                        
+                    </tbody>
+                </table>
+                
+            </div>
+
+
+        </div>
+
+        <div class="lado-login">
+            <div class="login-caja">
+                <h1 class="titulo-login is-size-2 has-text-centered">Editar sesion</h1>
+                <form class="box" id="form-editar-reserva">
+                    <input type="hidden" id="reserva-edit-id">
+                    <input type="hidden" id="reserva-cancha-id">
+                    <div class="field">
+                        <label class="label">fecha</label>
+                        <input id="reserva-edit-fecha"  class="input" type="date" placeholder="ej: Franco Colapinto" />
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Hora inicio</label>
+                        <input id="reserva-edit-hora-inicio"    class="input" type="time" placeholder="ej: usuario2dominio.com" />
+                    </div>
+                    <div class="field">
+                        <label class="label">Hora fin</label>
+                        <input id="reserva-edit-hora-fin"  class="input" type="time" placeholder="ej: 1123456789" />
+                    </div>
+
+
+                    <button class="button is-primary" type="button" onclick="editar_reserva()">Confirmar</button>
+
+                </form>
+            </div>
+            
+
+        </div>
+
+    </div>
+    
+    
+    <footer class="footer has-text-light">
+        <div class="container">
+            <div class="columns is-variable is-8">
+
+                <div class="column">
+                    <h3 class="title is-5 has-text-white">SportRent</h3>
+                    <p>Alquiler de canchas deportivas para fútbol, pádel y más. Reservá fácil, rápido y desde cualquier dispositivo.</p>
+                </div>
+
+                <div class="column">
+                    <h3 class="title is-6 has-text-white">Navegación</h3>
+                    <ul>
+                        <li><a href="./index.html" class="has-text-light">Inicio</a></li>
+                        <li><a href="" class="has-text-light">Canchas</a></li>
+                        <li><a href="./reservas.html" class="has-text-light">Reservar</a></li>
+                        <li><a href="./galeria.html" class="has-text-light">Galería</a></li>
+                        <li><a href="#" class="has-text-light">Contacto</a></li>
+                    </ul>
+                </div>
+
+    
+                <div class="column">
+                    <h3 class="title is-6 has-text-white">Contacto</h3>
+                    <p><i class="fas fa-phone-alt"></i> +54 11 2706-8818</p>
+                    <p><i class="fas fa-envelope"></i> contacto@fi.uba.ar</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Buenos Aires, Argentina</p>
+                </div>
+
+    
+                <div class="column">
+                    <h3 class="title is-6 has-text-white">Seguinos</h3>
+                    <p class="icons">
+                        <a href="#" class="icon has-text-light is-large"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="icon has-text-light is-large"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="icon has-text-light is-large"><i class="fab fa-twitter"></i></a>
+                    </p>
+                </div>
+
+            </div>
+
+            <hr class="has-background-grey">
+                <div class="has-text-centered">
+                    <p class="is-size-7">© 2025 Fideos con tuco. Todos los derechos reservados.</p>
+                </div>
+            </div>
+    </footer>
+    
+    <script src="./js/mis_reservas.js"></script>
+    <script>
+        cargar_mis_reservas();
+    </script>
+</body>
+</html>
+
