@@ -139,3 +139,47 @@ async function eliminar_cancha(id) {
     }
 }
 
+async function mostrarCanchasEnTabla() {
+    const body_canchas = document.getElementById('lista_canchas');
+    
+    try {
+        const respuesta = await fetch('http://localhost:3000/canchas');
+        
+        if (!respuesta.ok) {
+            throw new Error(`Error al obtener datos: ${respuesta.status}`);
+        }
+
+        const canchas = await respuesta.json();
+
+        body_canchas.innerHTML = ""; 
+
+        if (canchas.length === 0) {
+            body_canchas.innerHTML =
+                "<tr><td colspan='7' class='has-text-centered'>No hay canchas registradas.</td></tr>";
+            return;
+        }
+
+        canchas.forEach(cancha => {
+            body_canchas.innerHTML += `
+                <tr>
+                    <td><strong>${cancha.id}</strong></td>
+                    <td>${cancha.nombre}</td>
+                    <td>${cancha.tipo}</td>
+                    <td>$${cancha.precio_por_hora}</td>
+                    <td>${cancha.ubicacion}</td>
+                    <td>${cancha.capacidad} personas</td>
+                    <td>
+                        <button class="button is-link"
+                            onclick="preparar_edicion_canchas(${JSON.stringify(cancha).replace(/"/g, '&quot;')})">
+                            Editar
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+
+    } catch (error) {
+        console.error("Error al llenar la tabla:", error);
+    }
+}
+
