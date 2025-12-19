@@ -107,4 +107,28 @@ router.put("/canchas/:id", verifyToken, requireAdmin, async (req, res) => {
 });
 
 
+router.delete("/canchas/:id", verifyToken, requireAdmin, async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const DELETE_CANCHA = `
+        DELETE FROM canchas
+        WHERE id = $1
+        RETURNING *;
+        `;
+
+        const resultado = await pool.query(DELETE_CANCHA, [id]);
+
+        if (resultado.rowCount === 0) {
+            return res.status(404).json({ mensaje: "no se encontro la cancha" });
+        }
+
+        res.json({ mensaje: "cancha eliminada" });
+    } catch (error) {
+        console.error("error al eliminar la cancha:", error);
+        res.status(500).json({ mensaje: "error interno del servidor" });
+    }
+});
+
+
 export default router;
