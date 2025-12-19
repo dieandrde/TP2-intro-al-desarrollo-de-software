@@ -184,5 +184,73 @@ router.post("/reservas", verifyToken, async (req, res) => {
     }
 });
 
-    
-    
+router.put("/reservas/:id", verifyToken, async (req, res) => {
+    const id = req.params.id;
+    const { cancha_id, fecha, hora_inicio, hora_fin } = req.body;
+    const usuario_id_token = req.user.id; // ID de quien hace la petición
+    const esAdmin = req.user.es_admin;      // ¿Es administrador?
+
+    try {
+        // 1. PRIMERO: Verificar si la reserva existe y a quién pertenece
+        const reservaExistente = await pool.query("SELECT usuario_id FROM reservas WHERE id = $1", [id]);
+
+        if (reservaExistente.rowCount === 0) {
+            return res.status(404).json({ mensaje: "Reserva no encontrada." });
+        }
+
+        const dueñoDeLaReserva = reservaExistente.rows[0].usuario_id;
+
+        //  VALIDACIÓN DE PROPIEDAD:
+        // Si no es el dueño Y no es administrador, prohibir la acción.
+        if (dueñoDeLaReserva !== usuario_id_token && !esAdmin) {
+            return res.status(403).json({ mensaje: "No tienes permiso para modificar esta reserva." });
+        }
+
+        // 2. VALIDACIONES DE TIEMPO (Usando moment igual que en el POST)
+        const inicio = moment(`${fecha} ${hora_inicio}`, "YYYY-MM-DD HH:mm");
+        const fin = moment(`${fecha} ${hora_fin}`, "YYYY-MM-DD HH:mm");
+        const duracionHoras = fin.diff(inicio, 'hours', true);
+
+        if (duracionHoras <= 0) {
+            return res.status(400).json({ mensaje: "La hora de fin debe ser posterior al inicio." });
+        }
+
+        // 3. RE-CALCULAR COSTO (En caso de que cambien de cancha o de horario)
+        const canchaInfo = await pool.query("SELECT precio_por_hora FROM canchas WHERE id = $1", [cancha_id]);
+        if (canchaInfo.rowCount === 0) {
+            return res.status(404).json({ mensaje: "La cancha especificada no existe." });
+        }
+        const costo_total = parseFloat(canchaInfo.rows[0].precio_por_hora) * duracionHoras;
+
+        // 4. VERIFICAR DISPONIBILIDAD (Excluyendo la reserva actual)
+        const CHECK_AVAILABILITY = `
+            SELECT id FROM reservas
+            WHERE cancha_id = $1 AND fecha = $2 AND id != $3 AND estado = 'confirmada'
+            AND (($4 < hora_fin AND $4 >= hora_inicio) 
+              OR ($5 > hora_inicio AND $5 <= hora_fin)
+              OR ($4 <= hora_inicio AND $5 >= hora_fin))
+            LIMIT 1;
+        `;
+        const availabilityCheck = await pool.query(CHECK_AVAILABILITY, [cancha_id, fecha, id, hora_inicio, hora_fin]);
+
+        if (availabilityCheck.rows.length > 0) {
+            return res.status(409).json({ mensaje: "Conflicto: El nuevo horario ya está ocupado." });
+        }
+
+        // 5. EJECUTAR ACTUALIZACIÓN
+        const UPDATE_RESERVA = `
+            UPDATE reservas
+            SET cancha_id = $1, fecha = $2, hora_inicio = $3, hora_fin = $4, costo_total = $5
+            WHERE id = $6
+            RETURNING *;
+        `;
+        const resultado = await pool.query(UPDATE_RESERVA, [cancha_id, fecha, hora_inicio, hora_fin, costo_total, id]);
+
+        res.json({ mensaje: "Reserva actualizada con éxito", reserva: resultado.rows[0] });
+
+    } catch (error) {
+        console.error("Error al actualizar reserva:", error);
+        res.status(500).json({ mensaje: "Error interno del servidor." });
+    }
+});    
+
