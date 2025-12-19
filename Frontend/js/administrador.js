@@ -125,3 +125,17 @@ async function crear_cancha() {
     }       
 }
 
+async function eliminar_cancha(id) {
+    if (!confirm("¿Seguro que quieres eliminar esta cancha?")) return;
+
+    const token = localStorage.getItem('jwtToken');
+    const resp = await fetch(`http://localhost:3000/canchas/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (resp.ok) {
+        mostrarCanchasEnTabla(); // Refrescar la tabla
+    }
+}
+
