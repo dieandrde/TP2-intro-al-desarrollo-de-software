@@ -1,3 +1,4 @@
+
 async function obtenerListaUsuarios() {
     const token = localStorage.getItem('jwtToken');
     
@@ -365,4 +366,7 @@ async function eliminar_reserva(id) {
         alert("Ocurrió un error al intentar conectar con el servidor.");
     }
 }
+
+
+
 
