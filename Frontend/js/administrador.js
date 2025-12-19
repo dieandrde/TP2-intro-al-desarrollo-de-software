@@ -51,3 +51,46 @@ async function mostrar_reservas() {
         body_reservas.innerHTML = "<tr><td colspan='8' class='has-text-danger'>Error al conectar con el servidor.</td></tr>";
     }
 }
+
+async function eliminar_reserva(id) {
+    // 1. Confirmación de seguridad
+    const confirmar = confirm("¿Seguro que quieres eliminar esta reserva? Esta acción no se puede deshacer.");
+    if (!confirmar) return;
+
+    const token = localStorage.getItem('jwtToken');
+
+    try {
+        const resp = await fetch(`http://localhost:3000/reservas/${id}`, {
+            method: 'DELETE',
+            headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        // 2. Manejo de errores específicos
+        if (resp.status === 403) {
+            alert("No tienes permiso para eliminar esta reserva.");
+            return;
+        }
+
+        if (resp.status === 401) {
+            alert("Tu sesión ha expirado. Por favor, vuelve a iniciar sesión.");
+            window.location.href = "login.html";
+            return;
+        }
+
+        if (resp.ok) {
+            alert("Reserva eliminada con éxito.");
+            // 3. Volvemos a cargar la tabla para reflejar el cambio
+            await mostrar_reservas(); 
+        } else {
+            const errorData = await resp.json();
+            alert("Error al eliminar: " + (errorData.mensaje || "Error desconocido"));
+        }
+
+    } catch (error) {
+        console.error("Error en la petición DELETE:", error);
+        alert("Ocurrió un error al intentar conectar con el servidor.");
+    }
+}
