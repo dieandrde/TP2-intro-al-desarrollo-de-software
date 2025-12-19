@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Reserva - SportRent</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link rel="stylesheet" href="style/header.css">
+    <link rel="stylesheet" href="style/style_index.css">
+    <link rel="stylesheet" href="style/style_reseñas.css"> 
+    <link rel="stylesheet" href="style/style_confirmar_reserva.css"> 
+</head>
+
+<body style="background-color: #1a4f1a;"> 
+    
+    <header class="header">
+        <div class="header-izquierda">
+            <img src="./images/logo.jpg" alt="Logo" class="logo-header">
+            <span class="brand-title">ALQUILER DE CANCHAS</span>
+        </div>
+        <nav class="header-derecho">
+            <a href="index.html">Inicio</a>
+            <a href="lista_precios.html">Canchas</a>
+            <a href="reseñas.html">Reseñas</a>
+            <a href="login.html">Iniciar Sesión</a>
+            <a href="confirmar_reservas.html" style="color: #1e6f43; font-weight: bold;">Reservas</a>
+        </nav>
+    </header>
+
+    <main class="container" style="margin-top: 80px; padding: 0 20px;">
+        
+        <div style="max-width: 900px; margin: 0 auto;">
+            
+            
+
+            <div class="has-text-centered">
+                <h2 class="title is-2 has-text-white mb-5">Mis Turnos Confirmados</h2>
+                
+                <div id="contenedor-reservas" class="grid-reservas">
+                    </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer has-text-light">
+        <div class="container">
+            <div class="has-text-centered">
+                <p>© 2025 Fideos con tuco. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="modal-editar" class="modal">
+        <div class="modal-background" onclick="cerrarModal()"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Modificar Reserva</p>
+                <button class="delete" aria-label="close" onclick="cerrarModal()"></button>
+            </header>
+            <section class="modal-card-body">
+                <input type="hidden" id="edit-id"> 
+                <div class="field">
+                    <label class="label">Nueva Fecha</label>
+                    <input class="input" type="date" id="edit-fecha">
+                </div>
+                <div class="field">
+                    <label class="label">Hora Inicio</label>
+                    <input class="input" type="time" id="edit-inicio">
+                </div>
+                <div class="field">
+                    <label class="label">Hora Fin</label>
+                    <input class="input" type="time" id="edit-fin">
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" onclick="guardarCambios()">Guardar cambios</button>
+                <button class="button" onclick="cerrarModal()">Cancelar</button>
+            </footer>
+        </div>
+    </div>    
+
+
+    <script>window.onload = cargarReservas;</script>
+    <script src="js/reservas.js"></script>
+
+    <script>
+        window.onload = function() {
+            cargarReservas(); 
+            // Esto evita que mande fecha vacía y tire otro error
+            document.getElementById('nueva-fecha').valueAsDate = new Date();
+        };
+    </script>
+</body>
+</html>
