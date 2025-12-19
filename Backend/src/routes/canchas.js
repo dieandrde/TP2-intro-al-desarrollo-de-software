@@ -45,5 +45,30 @@ router.get("/canchas/:id", async (req, res) => {
     }
 });
 
+router.post("/canchas", verifyToken, requireAdmin, async (req, res) => {
+    const { nombre, tipo, precio_por_hora, ubicacion, capacidad } = req.body;
+
+    try {
+        const CREATE_CANCHA = `
+        INSERT INTO canchas (nombre, tipo, precio_por_hora, ubicacion, capacidad)
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING *;
+        `;
+
+        const resultado = await pool.query(CREATE_CANCHA, [
+            nombre,
+            tipo,
+            precio_por_hora,
+            ubicacion,
+            capacidad
+        ]);
+
+        res.status(201).json(resultado.rows[0]);
+    } catch (error) {
+        console.error("error al crear cancha:", error);
+        res.status(500).json({ mensaje: "error interno del servidor" });
+    }
+});
+
 
 export default router;
