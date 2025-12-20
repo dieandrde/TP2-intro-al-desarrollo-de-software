@@ -31,7 +31,7 @@ CREATE TABLE reservas (
         ON DELETE CASCADE,
         
     fecha DATE NOT NULL,
-   hora_inicio TIME NOT NULL,
+    hora_inicio TIME NOT NULL,
     hora_fin TIME NOT NULL,
     costo_total DECIMAL(10, 2) NOT NULL,
     estado VARCHAR(20) NOT NULL DEFAULT 'confirmada'
