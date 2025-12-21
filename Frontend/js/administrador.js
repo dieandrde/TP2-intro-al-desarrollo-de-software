@@ -8,7 +8,6 @@ async function obtenerListaUsuarios() {
         return;
     }
 
-    // 1. Declarar tabla_body ANTES del try/catch
     const tabla_body = document.getElementById('lista_usuarios');
     
     if (!tabla_body) {
@@ -24,27 +23,24 @@ async function obtenerListaUsuarios() {
             }
         });
         
-        // 2. Manejo de Errores HTTP
+        // manejo errores http
         if (!response.ok) {
-            const errorData = await response.json(); // Intentamos leer el mensaje de error del Backend
+            const errorData = await response.json();
             
             if (response.status === 403) {
-                 alert('Acceso denegado. No eres administrador.');
+                alert('Acceso denegado. No eres administrador.');
             } else if (response.status === 401) {
-                 alert('Sesión expirada. Inicie sesión de nuevo.');
+                alert('Sesión expirada. Inicie sesión de nuevo.');
             } else {
-                 alert(`Error al cargar usuarios: ${errorData.message || response.statusText}`);
+                alert(`Error al cargar usuarios: ${errorData.message || response.statusText}`);
             }
-            // Limpiamos o mostramos mensaje de error
             tabla_body.innerHTML = '<tr><td colspan="5">Error al cargar usuarios.</td></tr>';
             return;
         }
         
-        // 3. Bloque de ÉXITO
-        // Declarar 'usuarios' como const DENTRO de este bloque es seguro
         const usuarios = await response.json(); 
         
-        // Limpiar la tabla y llenarla
+        // limpiar la tabla y llenarla
         tabla_body.innerHTML = ''; 
 
         if (usuarios.length === 0) {
@@ -68,7 +64,7 @@ async function obtenerListaUsuarios() {
         });
         
     } catch (error) {
-        // Captura errores de red (si el servidor está caído)
+        // captura de errores en caso de q el server este caido
         console.error('Error de red al obtener usuarios:', error);
         alert('Error de conexión con el servidor.');
     }
@@ -126,7 +122,7 @@ async function eliminarUsuario(id) {
     });
 
     if (resp.ok) {
-        obtenerListaUsuarios(); // Refrescar la tabla
+        obtenerListaUsuarios(); // refrescar
     }
 }
 
@@ -145,7 +141,7 @@ async function mostrarCanchasEnTabla() {
 
         const canchas = await respuesta.json();
 
-        // Limpiamos el cuerpo de la tabla
+        // limpiar cuerpo tabla
         body_canchas.innerHTML = ""; 
 
         if (canchas.length === 0) {
@@ -153,7 +149,6 @@ async function mostrarCanchasEnTabla() {
             return;
         }
 
-        // Recorremos las canchas y creamos las filas
         canchas.forEach(cancha => {
             body_canchas.innerHTML += `
                 <tr>
@@ -233,7 +228,7 @@ async function eliminar_cancha(id) {
     });
 
     if (resp.ok) {
-        mostrarCanchasEnTabla(); // Refrescar la tabla
+        mostrarCanchasEnTabla(); // refrescar tabla
     }
 }
 
@@ -299,7 +294,7 @@ async function mostrar_reservas() {
         }
 
         reservas.forEach(reserva => {
-            // Formateamos la fecha para que sea más legible (opcional)
+            // formateo de fecha
             const fechaFormateada = new Date(reserva.fecha).toLocaleDateString();
 
             body_reservas.innerHTML += `
@@ -325,7 +320,7 @@ async function mostrar_reservas() {
 }
 
 async function eliminar_reserva(id) {
-    // 1. Confirmación de seguridad
+    // confirmacion de seguridad
     const confirmar = confirm("¿Seguro que quieres eliminar esta reserva? Esta acción no se puede deshacer.");
     if (!confirmar) return;
 
@@ -340,7 +335,7 @@ async function eliminar_reserva(id) {
             }
         });
 
-        // 2. Manejo de errores específicos
+        // manejo de errores
         if (resp.status === 403) {
             alert("No tienes permiso para eliminar esta reserva.");
             return;
@@ -354,7 +349,6 @@ async function eliminar_reserva(id) {
 
         if (resp.ok) {
             alert("Reserva eliminada con éxito.");
-            // 3. Volvemos a cargar la tabla para reflejar el cambio
             await mostrar_reservas(); 
         } else {
             const errorData = await resp.json();

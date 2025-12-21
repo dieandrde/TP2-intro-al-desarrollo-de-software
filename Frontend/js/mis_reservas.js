@@ -31,7 +31,6 @@ async function cargar_mis_reservas() {
         }
 
         reservas.forEach(reserva => {
-            // Formatear fecha para que no se vea como ISO string
             const fechaFormateada = new Date(reserva.fecha).toLocaleDateString();
 
             body_mis_reservas.innerHTML += `
@@ -61,23 +60,18 @@ function preparar_edicion_reserva(reserva) {
     
     const fechaLimpia = reserva.fecha.split('T')[0];
     document.getElementById('reserva-edit-fecha').value = fechaLimpia;
-    
-    // Forzamos formato HH:mm cortando los segundos si existen
     document.getElementById('reserva-edit-hora-inicio').value = reserva.hora_inicio.substring(0, 5);
     document.getElementById('reserva-edit-hora-fin').value = reserva.hora_fin.substring(0, 5);
 }
 
 async function editar_reserva() {
     const token = localStorage.getItem('jwtToken');
-    
-    // 1. Obtener los valores de los inputs
     const idReserva = document.getElementById('reserva-edit-id').value;
     const canchaId = document.getElementById('reserva-cancha-id').value;
     const fecha = document.getElementById('reserva-edit-fecha').value;
     const horaInicio = document.getElementById('reserva-edit-hora-inicio').value;
     const horaFin = document.getElementById('reserva-edit-hora-fin').value;
     
-    // Validación básica
     if (!idReserva || !fecha || !horaInicio || !horaFin) {
         alert("Por favor, selecciona una reserva de la tabla y completa todos los campos.");
         return;
@@ -105,12 +99,12 @@ async function editar_reserva() {
         if (respuesta.ok) {
             alert("Reserva actualizada con éxito.");
             
-            // 2. Limpiar el formulario
+            // limpia el formulario
             document.getElementById('form-editar-reserva').reset();
             document.getElementById('reserva-edit-id').value = "";
             document.getElementById('reserva-cancha-id').value = "";
             
-            // 3. Recargar la tabla para ver los cambios
+            // recarga tabla
             cargar_mis_reservas();
         } else {
             alert("Error: " + (resultado.mensaje || "No se pudo actualizar la reserva"));
@@ -137,7 +131,7 @@ async function eliminar_reserva(id) {
 
         if (respuesta.ok) {
             alert("Reserva cancelada correctamente.");
-            cargar_mis_reservas(); // Recargar la tabla
+            cargar_mis_reservas(); //rcarga la tabla
         } else {
             const error = await respuesta.json();
             alert("Error: " + error.mensaje);

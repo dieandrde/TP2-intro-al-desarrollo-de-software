@@ -1,12 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Obtener el ID de la URL
+    // obtiene id url
     const urlParams = new URLSearchParams(window.location.search);
     const canchaId = urlParams.get('cancha_id');
-
-    // 2. Buscar el input (con el ID exacto del HTML)
     const inputCancha = document.getElementById('reserva-cancha-id');
 
-    // 3. Verificar que el input existe antes de asignarle el valor
+    // if input existe, se asigna valor
     if (inputCancha) {
         if (canchaId) {
             inputCancha.value = canchaId;
@@ -19,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 async function crear_reserva() {
-    // 1. Obtener el token del localStorage (asegúrate de usar el nombre correcto 'jwtToken')
+    // jwt token, localstorage
     const token = localStorage.getItem('jwtToken');
 
     if (!token) {
@@ -28,12 +26,11 @@ async function crear_reserva() {
         return;
     }
 
-    const canchaId = document.getElementById('reserva-cancha-id').value; // Verifica que el ID sea el mismo que el input hidden
+    const canchaId = document.getElementById('reserva-cancha-id').value; // id es el mismo que el input hidden?
     const fecha = document.getElementById('reserva-fecha').value;
     const horaInicio = document.getElementById('reserva-hora-inicio').value;
     const horaFin = document.getElementById('reserva-hora-fin').value;
 
-    // Validación simple antes de enviar
     if (!fecha || !horaInicio || !horaFin) {
         alert("Por favor, completa todos los campos.");
         return;
@@ -60,9 +57,8 @@ async function crear_reserva() {
 
         if (respuesta.ok) {
             alert("¡Reserva creada con éxito!");
-            window.location.href = 'lista_precios.html'; // Redirigir a sus reservas
+            window.location.href = 'lista_precios.html'; // redireccion a reservas
         } else {
-            // Aquí capturamos los errores del backend (ej: "La cancha ya está ocupada")
             alert("Error: " + (resultado.mensaje || "No se pudo crear la reserva"));
         }
 

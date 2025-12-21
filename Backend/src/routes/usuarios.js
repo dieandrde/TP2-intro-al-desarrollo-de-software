@@ -11,7 +11,7 @@ const router = Router();
 
 
 
-// Te devuelve todos los usuarios (sin password_hash)
+// devuelve todos los usuarios sin hash
 router.get("/usuarios", verifyToken, requireAdmin, async (req, res) => {
     try {
         const sql = "SELECT id, nombre, email, telefono, fecha_registro, es_admin FROM usuarios"; 
@@ -23,7 +23,7 @@ router.get("/usuarios", verifyToken, requireAdmin, async (req, res) => {
 });
 
 
-// Te devuelve un usuario por ID (sin password_hash)
+// devuelve usuario por id
 router.get("/usuarios/:id", verifyToken, async (req, res) => {
     const userId = req.params.id; 
     
@@ -36,11 +36,11 @@ router.get("/usuarios/:id", verifyToken, async (req, res) => {
         }
         res.json(result.rows[0]);
     } catch (err) {
-        res.status(500).json({ error: "DB error al obtener usuario." });
+        res.status(500).json({ error: "error al obtener usuario" });
     }
 });
 
-// Crea un nuevo usuario
+// crea usuario
 router.post("/usuarios", async (req, res) => {
 
   if ( req.body === undefined){
@@ -53,10 +53,10 @@ router.post("/usuarios", async (req, res) => {
   const password = req.body.password;
 
   if (!nombre) {
-        return res.status(400).json({ message: 'Nombre es obligatorio para el registro.' });
+        return res.status(400).json({ message: 'ingrese un nombre para el registro' });
   }
   if ( !email) {
-        return res.status(400).json({ message: 'email es obligatorio para el registro.' });
+        return res.status(400).json({ message: 'ingrese un email para el registro' });
   }
   if ( !password) {
         return res.status(400).json({ message: 'password es obligatorio para el registro.' });
@@ -64,7 +64,7 @@ router.post("/usuarios", async (req, res) => {
   if ( !telefono) {
         return res.status(400).json({ message: 'telefono es obligatorio para el registro.' });
   }
-
+  //REGEX
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const telefonoRegex = /^\d{10}$/
 
@@ -100,7 +100,7 @@ router.post("/usuarios", async (req, res) => {
 
 
 
-// Actualizar un usuario existente
+// actuaizacion usuario existente
 router.put("/usuarios/:id", verifyToken, async (req, res) => {
 
     const userId = req.params.id;
@@ -152,7 +152,7 @@ router.put("/usuarios/:id", verifyToken, async (req, res) => {
         let finalPasswordHash = userCheck.rows[0].password_hash;
 
         if (password && password.trim() !== "") {
-            // Si el admin escribió algo en el campo password, lo hasheamos
+            // si el admin escribio algo en el campo password, lo hasheamos
             finalPasswordHash = await bcrypt.hash(password, 10);
         }
         
@@ -193,7 +193,7 @@ router.put("/usuarios/:id", verifyToken, async (req, res) => {
         });
     }
 })
-// Borra un usuario
+// borra un usuario
 router.delete("/usuarios/:id", verifyToken, requireAdmin, async (req, res) => {
     const userId = req.params.id;
 
@@ -215,13 +215,13 @@ router.delete("/usuarios/:id", verifyToken, requireAdmin, async (req, res) => {
     }
 });
 
-// Login de usuario
+// login de usuario
 router.post("/login", async (req, res) => {
 
 
     
     const email = req.body.email ? req.body.email.trim() : null; 
-    const password = req.body.password ? req.body.password.trim() : null; // <-- ¡AQUÍ!
+    const password = req.body.password ? req.body.password.trim() : null;
 
     if ( !email) {
 
@@ -243,7 +243,7 @@ router.post("/login", async (req, res) => {
 
         const passwordMatch = await bcrypt.compare(password, user.password_hash);
         if (!passwordMatch) {
-            return res.status(401).json({ message: "Credenciales incorrectas." });
+            return res.status(401).json({ message: "Credenciales incorrectas" });
         }
         const token = jwt.sign(
             { 
@@ -256,14 +256,14 @@ router.post("/login", async (req, res) => {
 
 
         res.status(200).json({
-            message: "Login exitoso.",
+            message: "Login exitoso",
             token: token,
             userId: user.id, 
             esAdmin: user.es_admin
         });
 
     } catch (error) {
-        res.status(500).json({ message: "Error interno del servidor." });
+        res.status(500).json({ message: "Error interno del servidor" });
     }
 });
 
