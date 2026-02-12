@@ -1,3 +1,4 @@
+
 services:
   db:
     image: postgres:17
@@ -17,10 +18,16 @@ services:
     container_name: backend-api
     depends_on:
       - db
-    env_file:
-      - ./Backend/.env
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/fiumbr
+      - JWT_SECRET=intro2c2025
+      - ADMIN_EMAIL=proadmin@gmail.com
+      - ADMIN_PASSWORD=admin12345
     ports:
       - "3000:3000"
+    volumes:
+      - ./Backend:/app
+      - /app/node_modules
 
   frontend:
     build: ./Frontend
@@ -32,3 +39,4 @@ services:
 
 volumes:
   postgres_data:
+
