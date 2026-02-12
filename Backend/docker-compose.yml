@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:17
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: fiumbr
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./Backend/scripts/db.sql:/docker-entrypoint-initdb.d/db.sql #se agrego esta linea creacion tablas automaticamente
+    ports:
+      - "5433:5432"
+
+  backend:
+    build: ./Backend
+    container_name: backend-api
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/fiumbr
+      - JWT_SECRET=intro2c2025
+      - ADMIN_EMAIL=proadmin@gmail.com
+      - ADMIN_PASSWORD=admin12345
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Backend:/app
+      - /app/node_modules
+
+  frontend:
+    build: ./Frontend
+    container_name: frontend
+    ports:
+      - "8081:80"
+    volumes:
+      - ./Frontend:/usr/share/nginx/html
+
+volumes:
+  postgres_data:
