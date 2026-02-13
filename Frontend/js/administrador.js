@@ -171,6 +171,47 @@ async function mostrarCanchasEnTabla() {
 
 
 
+async function mostrar_canchas_sin_edit() {
+    const body_canchas = document.getElementById('lista_canchas');
+    
+    try {
+        const respuesta = await fetch('http://localhost:3000/canchas');
+        
+        if (!respuesta.ok) {
+            throw new Error(`Error al obtener datos: ${respuesta.status}`);
+        }
+
+        const canchas = await respuesta.json();
+
+        // limpiar cuerpo tabla
+        body_canchas.innerHTML = ""; 
+
+        if (canchas.length === 0) {
+            cuerpoTabla.innerHTML = "<tr><td colspan='6' class='has-text-centered'>No hay canchas registradas.</td></tr>";
+            return;
+        }
+
+        canchas.forEach(cancha => {
+            body_canchas.innerHTML += `
+                <tr>
+                    <td>${cancha.nombre}</td>
+                    <td>${cancha.tipo}</td>
+                    <td>$${cancha.precio_por_hora}</td>
+                    <td>${cancha.ubicacion}</td>
+                    <td>${cancha.capacidad} personas</td>
+                    <td>
+                        <button class="button  is-danger" type="button" onclick="eliminar_cancha(${cancha.id})" >Eliminar</button>
+                    </td>
+                </tr>
+            `;
+        });
+
+    } catch (error) {
+        console.error("Error al llenar la tabla:", error);
+    }
+}
+
+
 
 function preparar_edicion_canchas(cancha) {
 
