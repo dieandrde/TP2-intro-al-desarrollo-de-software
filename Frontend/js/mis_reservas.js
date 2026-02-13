@@ -35,7 +35,6 @@ async function cargar_mis_reservas() {
 
             body_mis_reservas.innerHTML += `
                 <tr>
-                    <td>${reserva.id}</td>
                     <td>${fechaFormateada}</td>
                     <td>${reserva.hora_inicio}</td>
                     <td>${reserva.hora_fin}</td>

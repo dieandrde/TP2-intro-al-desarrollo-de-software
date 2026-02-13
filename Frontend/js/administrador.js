@@ -51,7 +51,6 @@ async function obtenerListaUsuarios() {
         usuarios.forEach(user => {
             tabla_body.innerHTML += `
                 <tr>
-                    <td>${user.id}</td>
                     <td>${user.nombre}</td>
                     <td>${user.email}</td>
                     <td>${user.telefono}</td> 
@@ -152,7 +151,6 @@ async function mostrarCanchasEnTabla() {
         canchas.forEach(cancha => {
             body_canchas.innerHTML += `
                 <tr>
-                    <td><strong>${cancha.id}</strong></td>
                     <td>${cancha.nombre}</td>
                     <td>${cancha.tipo}</td>
                     <td>$${cancha.precio_por_hora}</td>
@@ -299,7 +297,6 @@ async function mostrar_reservas() {
 
             body_reservas.innerHTML += `
                 <tr>
-                    <td>${reserva.id}</td>
                     <td>${fechaFormateada}</td>
                     <td>${reserva.hora_inicio}</td>
                     <td>${reserva.hora_fin}</td>
