@@ -1,13 +1,37 @@
 
 
-table {
+.table {
   width: 800px;      
   border-collapse: collapse;
+  background-color: rgb(156, 230, 20);
 }
+
+
 .contenedor_tabla {
   width:800px;      
   height: 400px;   
   overflow-y: auto;
 
 
+}
+.contenedor-botones-vertical {
+    display: flex;
+    flex-direction: column; /* Apila uno abajo del otro */
+    align-items: center;    /* Los centra horizontalmente */
+    gap: 100px;              /* Define la SEPARACIÓN exacta entre ellos */
+    padding: 100px;
+    width: 10%;            /* Para que el contenedor no fuerce el ancho */
+    background-color: rgba(12, 32, 22, 0.92);
+}
+
+
+.btn-navegacion {
+    width: 160px;           /* Define el TAMAÑO (Ancho) */
+    height: 45px;           /* Define el TAMAÑO (Alto) */
+    display: flex;
+    align-items: center;    /* Centra el texto verticalmente */
+    justify-content: center;/* Centra el texto horizontalmente */
+    text-align: center;
+    border-radius: 8px;     /* Bordes redondeados */
+    font-weight: bold;
 }

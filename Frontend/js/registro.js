@@ -13,9 +13,9 @@ async function registrarUsuario() {
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json', // Le dice al Backend que espera JSON
+                'Content-Type': 'application/json', // backend espera json
             },
-            body: JSON.stringify({  nombre, email, telefono, password   }), // Convierte el objeto JS a JSON (cadena de texto)
+            body: JSON.stringify({  nombre, email, telefono, password   }), // conversion de js a json
         });
 
         const resultado = await response.json();
@@ -26,7 +26,6 @@ async function registrarUsuario() {
             window.location.href = '/login.html'; 
 
         } else {
-            // Maneja errores 400 (Validación) o 409 (Email duplicado)
             alert('Error al registrar: ' + resultado.message);
         }
     } catch (error) {

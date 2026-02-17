@@ -4,7 +4,7 @@ async function cargarCanchas() {
     try {
         const respuesta = await fetch('http://localhost:3000/canchas');
         
-        // Primero verificamos si la respuesta del servidor es correcta (status 200)
+        // se verifica si servidor respone
         if (!respuesta.ok) {
             throw new Error(`Error en el servidor: ${respuesta.status}`);
         }
@@ -26,10 +26,9 @@ async function cargarCanchas() {
                 .replace(/[\u0300-\u036f]/g, "")
                 .replace(/\s+/g, "_");
 
-            // 2. Lista de fotos que REALMENTE tienes en tu carpeta /images
             const imagenesDisponibles = ['futbol', 'tenis', 'padel', 'basquet', 'voley'];
 
-            // 3. Verificamos si la foto existe, sino usamos la genérica
+            // si foto existe se usa si no la generica
             const imagenFinal = imagenesDisponibles.includes(deporteLimpio) 
                 ? deporteLimpio 
                 : 'default_cancha';

@@ -27,57 +27,68 @@
         </nav>
     </header>
     
+
+    
     <div class="contenedor-principal">
 
+        
         <div class="lado-imagen">
+            
+
             <div class="contenedor_tabla"> 
                 <table class="table">
                     <thead>      
                         <tr>        
                         <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Teléfono</th>
+                        <th>Tipo</th>
+                        <th>Precio por hora</th>
+                        <th>ubicacion</th>
+                        <th>capacidad</th>
                         <th>Acciones</th>
                         </tr>
                     </thead>
 
-                    <tbody id="lista_usuarios"> 
+                    <tbody id="lista_canchas"> 
                         
                         
                     </tbody>
                 </table>
                 
             </div>
-
+            
 
 
         </div>
 
         <div class="lado-login">
+            
             <div class="login-caja">
-                <h1 class="titulo-login is-size-2 has-text-centered">Editar sesion</h1>
-                <form class="box" id="form-editar-usuario">
-                    <input type="hidden" id="edit-id">
+                <h1 class="titulo-login is-size-2 has-text-centered">Editar Cancha</h1>
+                <form class="box" id="form-editar-cancha">
+                    <input type="hidden" id="edit-cancha-id">
                     <div class="field">
                         <label class="label">Nombre</label>
-                        <input id="edit-nombre"  class="input" type="nombre" placeholder="ej: Franco Colapinto" />
+                        <input id="edit-cancha-nombre"  class="input" type="nombre" placeholder="ej: cancha del sur" />
                     </div>
 
                     <div class="field">
-                        <label class="label">Email</label>
-                        <input id="edit-email"    class="input" type="email" placeholder="ej: usuario@dominio.com" />
+                        <label class="label">Tipo</label>
+                        <input id="edit-cancha-tipo"    class="input" type="email" placeholder="ej:Futbol 5" />
                     </div>
                     <div class="field">
-                        <label class="label">Telefono</label>
-                        <input id="edit-telefono"  class="input" type="telefono" placeholder="ej: 1123456789" />
+                        <label class="label">Ubicacion</label>
+                        <input id="edit-cancha-ubicacion"  class="input" type="telefono" placeholder="ej: av.rivadavia 2345" />
                     </div>
                     <div class="field">
-                        <label class="label">password</label>
-                        <input id="edit-password"  class="input" type="password" placeholder="ej:*********** " />
+                        <label class="label">Precio por hora</label>
+                        <input id="edit-cancha-precio"  class="input" type="number" placeholder="ej: 1000 " />
+                    </div>
+                    <div class="field">
+                        <label class="label">Capacidad</label>
+                        <input id="edit-cancha-capacidad"  class="input" type="number" placeholder="ej:  10 " />
                     </div>
 
-
-                    <button class="button is-primary" type="button" onclick="editarUsuario()">Confirmar</button>
+                    <button class="button is-primary" type="button" onclick="editar_cancha()">Confirmar</button>
 
                 </form>
             </div>
@@ -137,7 +148,7 @@
 
             <hr class="has-background-grey">
                 <div class="has-text-centered">
-                    <p class="is-size-7">© 2025 Fideos con tuco. Todos los derechos reservados.</p>
+                    <p class="is-size-7">©️ 2025 Fideos con tuco. Todos los derechos reservados.</p>
                 </div>
             </div>
     </footer>
@@ -150,4 +161,3 @@
     </script>
 </body>
 </html>
-

@@ -26,6 +26,7 @@
     justify-content: center;
     padding-top: 100px;     /* Empuja todo el contenido 100px hacia abajo */
     gap: 30px;
+    width: 120%;
 }
 
 .capa-imagen {
@@ -75,8 +76,10 @@
     padding-top: 100px;     /* Empuja todo el contenido 100px hacia abajo */
     gap: 30px; 
     padding-bottom: 50px;
+    width: 25%;
+    min-width: 0; /* <--- IMPORTANTE: permite que se encoja más allá del contenido */
+    flex: none;
 }
-
 .login-caja {
     width: 90%;
     max-width: 400px;

@@ -30,18 +30,23 @@
     <div class="contenedor-principal">
 
         <div class="lado-imagen">
+            
+            
             <div class="contenedor_tabla"> 
                 <table class="table">
                     <thead>      
                         <tr>        
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Teléfono</th>
+                        <th>Fecha</th>
+                        <th>Hora inicio</th>
+                        <th>Hora fin</th>
+                        <th>Costo total</th>
+                        <th>Cancha</th>
+                        <th>Usuario</th>
                         <th>Acciones</th>
                         </tr>
                     </thead>
 
-                    <tbody id="lista_usuarios"> 
+                    <tbody id="lista_reservas"> 
                         
                         
                     </tbody>
@@ -49,38 +54,6 @@
                 
             </div>
 
-
-
-        </div>
-
-        <div class="lado-login">
-            <div class="login-caja">
-                <h1 class="titulo-login is-size-2 has-text-centered">Editar sesion</h1>
-                <form class="box" id="form-editar-usuario">
-                    <input type="hidden" id="edit-id">
-                    <div class="field">
-                        <label class="label">Nombre</label>
-                        <input id="edit-nombre"  class="input" type="nombre" placeholder="ej: Franco Colapinto" />
-                    </div>
-
-                    <div class="field">
-                        <label class="label">Email</label>
-                        <input id="edit-email"    class="input" type="email" placeholder="ej: usuario@dominio.com" />
-                    </div>
-                    <div class="field">
-                        <label class="label">Telefono</label>
-                        <input id="edit-telefono"  class="input" type="telefono" placeholder="ej: 1123456789" />
-                    </div>
-                    <div class="field">
-                        <label class="label">password</label>
-                        <input id="edit-password"  class="input" type="password" placeholder="ej:*********** " />
-                    </div>
-
-
-                    <button class="button is-primary" type="button" onclick="editarUsuario()">Confirmar</button>
-
-                </form>
-            </div>
 
 
         </div>
@@ -137,7 +110,7 @@
 
             <hr class="has-background-grey">
                 <div class="has-text-centered">
-                    <p class="is-size-7">© 2025 Fideos con tuco. Todos los derechos reservados.</p>
+                    <p class="is-size-7">©️ 2025 Fideos con tuco. Todos los derechos reservados.</p>
                 </div>
             </div>
     </footer>
@@ -150,4 +123,3 @@
     </script>
 </body>
 </html>
-
