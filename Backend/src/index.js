@@ -10,7 +10,7 @@ const app = express();
 
 //cors front
 app.use(cors({
-  origin: "http://localhost:8081",
+  origin: ["https://tp2-intro-al-desarrollo-de-software-front.onrender.com/","http://localhost:8081"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
     <h1>BIENVENIDO AL SERVIDOR BACKEND - TP2 INTRODUCCIÓN AL DESARROLLO DE SOFTWARE</h1>
     <h2>Creamos un sistema de gestión de reservas para canchas deportivas</h2>
     <p>Estado: <span style="color: green;">Online</span></p>
-    <p>Acceso acá: <a href="http://localhost:8081">Ir al Frontend</a></p>
+    <p>Acceso acá: <a href="https://tp2-intro-al-desarrollo-de-software-front.onrender.com/">Ir al Frontend</a></p>
     <hr>
     <small>ENTIDADES: usuarios<-->reservas<-->canchas </small>
     <footer>Fideos con tuco's project</footer>
