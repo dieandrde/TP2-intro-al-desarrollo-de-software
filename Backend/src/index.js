@@ -10,7 +10,7 @@ const app = express();
 
 //cors front
 app.use(cors({
-  origin: ["https://tp2-intro-al-desarrollo-de-software-front.onrender.com/","http://localhost:8081"],
+  origin: ["https://tp2-intro-al-desarrollo-de-software-front.onrender.com","http://localhost:8081"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
