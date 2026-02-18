@@ -7,8 +7,6 @@ const {
     UPDATE_CANCHA,
     DELETE_CANCHA
 } = require("./canchas.queries");
-
-
 const obtener_canchas = async (req, res) => {
     try {
         const resultado = await db.query(GET_CANCHAS);
@@ -18,7 +16,6 @@ const obtener_canchas = async (req, res) => {
         res.status(500).json({ mensaje: "error interno del servidor" });
     }
 };
-
 const obtener_cancha_id = async (req, res) => {
     const id = req.params.id;
 
@@ -35,8 +32,6 @@ const obtener_cancha_id = async (req, res) => {
         res.status(500).json({ mensaje: "error interno del servidor" });
     }
 };
-
-
 const crear_cancha = async (req, res) => {
     const { nombre, tipo, precio_por_hora, ubicacion, capacidad } = req.body;
 
@@ -55,8 +50,6 @@ const crear_cancha = async (req, res) => {
         res.status(500).json({ mensaje: "error interno del servidor" });
     }
 };
-
-
 const actualizar_cancha = async (req, res) => {
     const id = req.params.id;
     const { nombre, tipo, precio_por_hora, ubicacion, capacidad } = req.body;
@@ -81,7 +74,6 @@ const actualizar_cancha = async (req, res) => {
         res.status(500).json({ mensaje: "error interno del servidor" });
     }
 };
-
 const eliminar_cancha = async (req, res) => {
     const id = req.params.id;
 
@@ -98,7 +90,6 @@ const eliminar_cancha = async (req, res) => {
         res.status(500).json({ mensaje: "error interno del servidor" });
     }
 };
-
 module.exports = {
     obtener_canchas,
     obtener_cancha_id,
