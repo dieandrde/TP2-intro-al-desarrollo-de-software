@@ -16,7 +16,7 @@ async function obtenerListaUsuarios() {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/usuarios', {
+        const response = await fetch('https://tp2-intro-al-desarrollo-de-software-db.onrender.com/usuarios', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -88,7 +88,7 @@ async function editarUsuario() {
     const password = document.getElementById('edit-password').value;
     
 
-    const resp = await fetch(`http://localhost:3000/usuarios/${id}`, {
+    const resp = await fetch(`https://tp2-intro-al-desarrollo-de-software-db.onrender.com/usuarios/${id}`, {
         method: 'PUT',
         headers: { 
             'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ async function eliminarUsuario(id) {
     if (!confirm("¿Seguro que quieres eliminar este usuario?")) return;
 
     const token = localStorage.getItem('jwtToken');
-    const resp = await fetch(`http://localhost:3000/usuarios/${id}`, {
+    const resp = await fetch(`https://tp2-intro-al-desarrollo-de-software-db.onrender.com/usuarios/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -132,7 +132,7 @@ async function mostrarCanchasEnTabla() {
     const body_canchas = document.getElementById('lista_canchas');
     
     try {
-        const respuesta = await fetch('http://localhost:3000/canchas');
+        const respuesta = await fetch('https://tp2-intro-al-desarrollo-de-software-db.onrender.com/canchas');
         
         if (!respuesta.ok) {
             throw new Error(`Error al obtener datos: ${respuesta.status}`);
@@ -175,7 +175,7 @@ async function mostrar_canchas_sin_edit() {
     const body_canchas = document.getElementById('lista_canchas');
     
     try {
-        const respuesta = await fetch('http://localhost:3000/canchas');
+        const respuesta = await fetch('https://tp2-intro-al-desarrollo-de-software-db.onrender.com/canchas');
         
         if (!respuesta.ok) {
             throw new Error(`Error al obtener datos: ${respuesta.status}`);
@@ -235,7 +235,7 @@ async function editar_cancha() {
     const capacidad = document.getElementById('edit-cancha-capacidad').value;
     
 
-    const resp = await fetch(`http://localhost:3000/canchas/${id}`, {
+    const resp = await fetch(`https://tp2-intro-al-desarrollo-de-software-db.onrender.com/canchas/${id}`, {
         method: 'PUT',
         headers: { 
             'Content-Type': 'application/json',
@@ -261,7 +261,7 @@ async function eliminar_cancha(id) {
     if (!confirm("¿Seguro que quieres eliminar esta cancha?")) return;
 
     const token = localStorage.getItem('jwtToken');
-    const resp = await fetch(`http://localhost:3000/canchas/${id}`, {
+    const resp = await fetch(`https://tp2-intro-al-desarrollo-de-software-db.onrender.com/canchas/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -283,7 +283,7 @@ async function crear_cancha() {
     const capacidad = document.getElementById('crear-cancha-capacidad').value;
     
 
-    const resp = await fetch(`http://localhost:3000/canchas`, {
+    const resp = await fetch(`https://tp2-intro-al-desarrollo-de-software-db.onrender.com/canchas`, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
@@ -310,7 +310,7 @@ async function mostrar_reservas() {
 
     
     try {
-        const respuesta = await fetch('http://localhost:3000/reservas', {
+        const respuesta = await fetch('https://tp2-intro-al-desarrollo-de-software-db.onrender.com/reservas', {
             method: 'GET', 
             headers: {
                 'Content-Type': 'application/json', 
@@ -365,7 +365,7 @@ async function eliminar_reserva(id) {
     const token = localStorage.getItem('jwtToken');
 
     try {
-        const resp = await fetch(`http://localhost:3000/reservas/${id}`, {
+        const resp = await fetch(`https://tp2-intro-al-desarrollo-de-software-db.onrender.com/reservas/${id}`, {
             method: 'DELETE',
             headers: { 
                 'Authorization': `Bearer ${token}`,

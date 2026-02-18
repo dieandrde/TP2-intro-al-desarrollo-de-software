@@ -1,7 +1,7 @@
 
 
 async function registrarUsuario() {
-    const url = 'http://localhost:3000/usuarios'; 
+    const url = 'https://tp2-intro-al-desarrollo-de-software-db.onrender.com/usuarios'; 
 
     try {
 

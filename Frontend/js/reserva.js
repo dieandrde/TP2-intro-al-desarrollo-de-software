@@ -44,7 +44,7 @@ async function crear_reserva() {
     };
 
     try {
-        const respuesta = await fetch('http://localhost:3000/reservas', {
+        const respuesta = await fetch('https://tp2-intro-al-desarrollo-de-software-db.onrender.com/reservas', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

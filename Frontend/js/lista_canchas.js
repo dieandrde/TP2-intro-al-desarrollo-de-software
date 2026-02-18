@@ -2,7 +2,7 @@ async function cargarCanchas() {
     const contenedor = document.getElementById('contenedor-canchas');
     
     try {
-        const respuesta = await fetch('http://localhost:3000/canchas');
+        const respuesta = await fetch('https://tp2-intro-al-desarrollo-de-software-db.onrender.com/canchas');
         
         // se verifica si servidor respone
         if (!respuesta.ok) {

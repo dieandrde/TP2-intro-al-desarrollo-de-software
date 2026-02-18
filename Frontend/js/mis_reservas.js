@@ -10,7 +10,7 @@ async function cargar_mis_reservas() {
     }
 
     try {
-        const respuesta = await fetch('http://localhost:3000/mis_reservas', {
+        const respuesta = await fetch('https://tp2-intro-al-desarrollo-de-software-db.onrender.com/mis_reservas', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -84,7 +84,7 @@ async function editar_reserva() {
     };
 
     try {
-        const respuesta = await fetch(`http://localhost:3000/reservas/${idReserva}`, {
+        const respuesta = await fetch(`https://tp2-intro-al-desarrollo-de-software-db.onrender.com/reservas/${idReserva}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -121,7 +121,7 @@ async function eliminar_reserva(id) {
     const token = localStorage.getItem('jwtToken');
 
     try {
-        const respuesta = await fetch(`http://localhost:3000/reservas/${id}`, {
+        const respuesta = await fetch(`https://tp2-intro-al-desarrollo-de-software-db.onrender.com/reservas/${id}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`
