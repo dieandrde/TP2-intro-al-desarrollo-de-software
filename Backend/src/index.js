@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
     <h1>BIENVENIDO AL SERVIDOR BACKEND - TP2 INTRODUCCIÓN AL DESARROLLO DE SOFTWARE</h1>
     <h2>Creamos un sistema de gestión de reservas para canchas deportivas</h2>
     <p>Estado: <span style="color: green;">Online</span></p>
-    <p>Acceso acá: <a href="https://tp2-intro-al-desarrollo-de-software-front.onrender.com/">Ir al Frontend</a></p>
+    <p>Acceso acá: <a href="https://tp2-intro-al-desarrollo-de-software-front.onrender.com">Ir al Frontend</a></p>
     <hr>
     <small>ENTIDADES: usuarios<-->reservas<-->canchas </small>
     <footer>Fideos con tuco's project</footer>
