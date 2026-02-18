@@ -31,8 +31,6 @@ export const verifyToken = (req, res, next) => {
     }
 };
 
-
-
 // Middleware: requireAdmin
 export const requireAdmin = (req, res, next) => {
     // Verificar si el middleware verifyToken se ejecutó y si el usuario tiene el rol
