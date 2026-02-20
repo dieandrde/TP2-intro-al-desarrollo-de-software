@@ -6,9 +6,6 @@ import { verifyToken, requireAdmin } from '../middlewares/middlewares.js';
 dotenv.config();
 const router = Router();
 
-
-
-
 router.get("/reservas",verifyToken, requireAdmin, async (req, res) => {
     
     let query = `
@@ -36,7 +33,6 @@ router.get("/reservas",verifyToken, requireAdmin, async (req, res) => {
         res.status(500).json({ mensaje: "Error interno del servidor." });
     }
 });
-
 router.get("/reservas/:id", async (req, res) => {
     const id = req.params.id;
 
@@ -68,8 +64,6 @@ router.get("/reservas/:id", async (req, res) => {
         res.status(500).json({ mensaje: "Error interno del servidor." });
     }
 });
-
-
 //reservas
 router.post("/reservas", verifyToken, async (req, res) => {
     const { cancha_id, fecha, hora_inicio, hora_fin  } = req.body;
@@ -189,7 +183,6 @@ router.post("/reservas", verifyToken, async (req, res) => {
         res.status(500).json({ mensaje: "Error interno del servidor al procesar la reserva" });
     }
 });
-
 router.put("/reservas/:id", verifyToken, async (req, res) => {
     const id = req.params.id;
     const { cancha_id, fecha, hora_inicio, hora_fin } = req.body;
@@ -267,7 +260,6 @@ router.put("/reservas/:id", verifyToken, async (req, res) => {
         res.status(500).json({ mensaje: "Error interno del servidor." });
     }
 });    
-
 router.delete("/reservas/:id", verifyToken, async (req, res) => {
     const id = req.params.id;         
     const usuario_id_token = req.user.id; 
@@ -311,7 +303,6 @@ router.delete("/reservas/:id", verifyToken, async (req, res) => {
         res.status(500).json({ mensaje: "error interno del servidor al intentar cancelar la reserva" });
     }
 });
-
 //me devuelve las reservas del usuario logueado
 router.get("/mis_reservas", verifyToken, async (req, res) => {
     const usuario_id = req.user.id; //middleware VERIFYTOKEN logica importante
@@ -333,6 +324,5 @@ router.get("/mis_reservas", verifyToken, async (req, res) => {
         res.status(500).json({ mensaje: "Error al obtener tus reservas" });
     }
 });
-
 
 export default router;

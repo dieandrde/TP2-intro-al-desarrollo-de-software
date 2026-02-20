@@ -21,7 +21,6 @@ router.get("/canchas", async (req, res) => {
         res.status(500).json({ mensaje: "error interno del servidor" });
     }
 });
-
 router.get("/canchas/:id", async (req, res) => {
     const id = req.params.id;
 
@@ -44,7 +43,6 @@ router.get("/canchas/:id", async (req, res) => {
         res.status(500).json({ mensaje: "error interno del servidor" });
     }
 });
-
 router.post("/canchas", verifyToken, requireAdmin, async (req, res) => {
     const { nombre, tipo, precio_por_hora, ubicacion, capacidad } = req.body;
 
@@ -69,7 +67,6 @@ router.post("/canchas", verifyToken, requireAdmin, async (req, res) => {
         res.status(500).json({ mensaje: "error interno del servidor" });
     }
 });
-
 router.put("/canchas/:id", verifyToken, requireAdmin, async (req, res) => {
     const id = req.params.id;
     const { nombre, tipo, precio_por_hora, ubicacion, capacidad } = req.body;
@@ -105,8 +102,6 @@ router.put("/canchas/:id", verifyToken, requireAdmin, async (req, res) => {
         res.status(500).json({ mensaje: "error interno del servidor" });
     }
 });
-
-
 router.delete("/canchas/:id", verifyToken, requireAdmin, async (req, res) => {
     const id = req.params.id;
 
@@ -129,6 +124,5 @@ router.delete("/canchas/:id", verifyToken, requireAdmin, async (req, res) => {
         res.status(500).json({ mensaje: "error interno del servidor" });
     }
 });
-
 
 export default router;

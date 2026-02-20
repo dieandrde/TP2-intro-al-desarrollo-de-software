@@ -7,8 +7,6 @@ CREATE TABLE Usuarios (
     fecha_registro DATE NOT NULL DEFAULT CURRENT_DATE,
     es_admin BOOLEAN NOT NULL DEFAULT FALSE
 );
-
-
 CREATE TABLE canchas (
     id SERIAL PRIMARY KEY,
     nombre varchar(100) not null,
@@ -17,8 +15,6 @@ CREATE TABLE canchas (
     ubicacion varchar(255),
     capacidad int not null
 );
-
-
 CREATE TABLE reservas (
     id SERIAL PRIMARY KEY,
     
@@ -35,4 +31,4 @@ CREATE TABLE reservas (
     hora_fin TIME NOT NULL,
     costo_total DECIMAL(10, 2) NOT NULL,
     estado VARCHAR(20) NOT NULL DEFAULT 'confirmada'
-); 
+);

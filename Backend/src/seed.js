@@ -58,5 +58,3 @@ const crear_admin_inicio = async () => {
 };
 
 crear_admin_inicio();
-
-

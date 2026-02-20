@@ -1,4 +1,3 @@
-
 async function obtenerListaUsuarios() {
     const token = localStorage.getItem('jwtToken');
     
@@ -68,7 +67,6 @@ async function obtenerListaUsuarios() {
         alert('Error de conexión con el servidor.');
     }
 }
-
 function prepararEdicion(user) {
 
     document.getElementById('edit-id').value = user.id;
@@ -76,8 +74,6 @@ function prepararEdicion(user) {
     document.getElementById('edit-email').value = user.email;
     document.getElementById('edit-telefono').value = user.telefono;
 }
-
-
 async function editarUsuario() {
     const id = document.getElementById('edit-id').value;
     const token = localStorage.getItem('jwtToken');
@@ -108,9 +104,6 @@ async function editarUsuario() {
 
     }
 }
-
-
-
 async function eliminarUsuario(id) {
     if (!confirm("¿Seguro que quieres eliminar este usuario?")) return;
 
@@ -124,10 +117,6 @@ async function eliminarUsuario(id) {
         obtenerListaUsuarios(); // refrescar
     }
 }
-
-
-
-
 async function mostrarCanchasEnTabla() {
     const body_canchas = document.getElementById('lista_canchas');
     
@@ -168,9 +157,6 @@ async function mostrarCanchasEnTabla() {
         console.error("Error al llenar la tabla:", error);
     }
 }
-
-
-
 async function mostrar_canchas_sin_edit() {
     const body_canchas = document.getElementById('lista_canchas');
     
@@ -210,9 +196,6 @@ async function mostrar_canchas_sin_edit() {
         console.error("Error al llenar la tabla:", error);
     }
 }
-
-
-
 function preparar_edicion_canchas(cancha) {
 
     document.getElementById('edit-cancha-id').value = cancha.id;
@@ -222,8 +205,6 @@ function preparar_edicion_canchas(cancha) {
     document.getElementById('edit-cancha-precio').value = cancha.precio_por_hora;
     document.getElementById('edit-cancha-capacidad').value = cancha.capacidad;
 }
-
-
 async function editar_cancha() {
     const id = document.getElementById('edit-cancha-id').value;
     const token = localStorage.getItem('jwtToken');
@@ -255,8 +236,6 @@ async function editar_cancha() {
 
     }
 }
-
-
 async function eliminar_cancha(id) {
     if (!confirm("¿Seguro que quieres eliminar esta cancha?")) return;
 
@@ -270,9 +249,6 @@ async function eliminar_cancha(id) {
         mostrarCanchasEnTabla(); // refrescar tabla
     }
 }
-
-
-
 async function crear_cancha() {
     const token = localStorage.getItem('jwtToken');
 
@@ -302,8 +278,6 @@ async function crear_cancha() {
 
     }       
 }
-
-
 async function mostrar_reservas() {
     const body_reservas = document.getElementById('lista_reservas');
     const token = localStorage.getItem('jwtToken');
@@ -356,7 +330,6 @@ async function mostrar_reservas() {
         body_reservas.innerHTML = "<tr><td colspan='8' class='has-text-danger'>Error al conectar con el servidor.</td></tr>";
     }
 }
-
 async function eliminar_reserva(id) {
     // confirmacion de seguridad
     const confirmar = confirm("¿Seguro que quieres eliminar esta reserva? Esta acción no se puede deshacer.");
@@ -398,7 +371,3 @@ async function eliminar_reserva(id) {
         alert("Ocurrió un error al intentar conectar con el servidor.");
     }
 }
-
-
-
-

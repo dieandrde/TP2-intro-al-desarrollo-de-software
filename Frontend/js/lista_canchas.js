@@ -58,9 +58,6 @@ async function cargarCanchas() {
         console.error("Error detallado:", error);
     }
 }
-
 function ir_a_reserva(cancha_id) {
     window.location.href = `reserva.html?cancha_id=${cancha_id}`;
 }
-
-

@@ -1,4 +1,3 @@
-
 import { Router } from 'express';
 import { pool } from "../db/db.js";
 import bcrypt from "bcryptjs";
@@ -8,9 +7,6 @@ import { verifyToken, requireAdmin } from '../middlewares/middlewares.js';
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
 const router = Router();
-
-
-
 // devuelve todos los usuarios sin hash
 router.get("/usuarios", verifyToken, requireAdmin, async (req, res) => {
     try {
@@ -21,8 +17,6 @@ router.get("/usuarios", verifyToken, requireAdmin, async (req, res) => {
         res.status(500).json({ error: "DB error" });
     }
 });
-
-
 // devuelve usuario por id
 router.get("/usuarios/:id", verifyToken, async (req, res) => {
     const userId = req.params.id; 
@@ -39,7 +33,6 @@ router.get("/usuarios/:id", verifyToken, async (req, res) => {
         res.status(500).json({ error: "error al obtener usuario" });
     }
 });
-
 // crea usuario
 router.post("/usuarios", async (req, res) => {
 
@@ -96,10 +89,6 @@ router.post("/usuarios", async (req, res) => {
         res.status(500).json({ message: 'Error interno del servidor al crear usuario.', error: error.message });
     }
 })
-
-
-
-
 // actuaizacion usuario existente
 router.put("/usuarios/:id", verifyToken, async (req, res) => {
 
@@ -214,7 +203,6 @@ router.delete("/usuarios/:id", verifyToken, requireAdmin, async (req, res) => {
         res.status(500).json({ error: "Error en la base de datos." });
     }
 });
-
 // login de usuario
 router.post("/login", async (req, res) => {
 
@@ -266,6 +254,4 @@ router.post("/login", async (req, res) => {
         res.status(500).json({ message: "Error interno del servidor" });
     }
 });
-
-
 export default router;

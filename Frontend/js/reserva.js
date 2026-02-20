@@ -14,8 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("No se encontró el elemento con ID 'reserva-cancha-id' en el HTML.");
     }
 });
-
-
 async function crear_reserva() {
     // jwt token, localstorage
     const token = localStorage.getItem('jwtToken');

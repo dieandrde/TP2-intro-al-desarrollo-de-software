@@ -62,7 +62,6 @@ function preparar_edicion_reserva(reserva) {
     document.getElementById('reserva-edit-hora-inicio').value = reserva.hora_inicio.substring(0, 5);
     document.getElementById('reserva-edit-hora-fin').value = reserva.hora_fin.substring(0, 5);
 }
-
 async function editar_reserva() {
     const token = localStorage.getItem('jwtToken');
     const idReserva = document.getElementById('reserva-edit-id').value;
@@ -114,7 +113,6 @@ async function editar_reserva() {
         alert("Error de conexión con el servidor.");
     }
 }
-
 async function eliminar_reserva(id) {
     if (!confirm("¿Estás seguro de que deseas cancelar esta reserva?")) return;
 
