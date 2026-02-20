@@ -63,6 +63,8 @@ docker compose up --build
 ```   
 (con esto nos aseguramos de crear las imagenes, levantar la base de datos, ejecutar seed inicial, iniciar el backend y el frontend con Nginx)
 
+el sistema está compuesto por tres servicios independientes (base de datos, backend y frontend) orquestados mediante Docker Compose.
+
 **3. acceder al sistema:**
 
 frontend:
@@ -74,6 +76,19 @@ backend:
 ```code
 http://localhost:3000
 ```
+
+## levantamiento individual de servicios (opcional):
+si se desea ejecutar los servicios por separado, Docker Compose permite iniciar únicamente los necesarios.
+- Solo base de datos y backend:
+```bash
+docker compose up db backend
+```
+
+- solo frontend:
+```bash
+docker compose up frontend
+```
+*nota: el frontend requiere que el backend esté en ejecución para consumir la API correctamente*  
 
 ## usuario administrador por defecto:
 al iniciar el sistema, se crea automáticamente un usuario administrador:
@@ -96,7 +111,7 @@ al iniciar el sistema, se crea automáticamente un usuario administrador:
 <img width="1920" height="1080" alt="editar_reserva" src="https://github.com/user-attachments/assets/46deab77-199b-4dc7-b67f-ad39178671de" />
 
 ### panel administración:
-<img width="1920" height="1080" alt="gestion_usuarios" src="https://github.com/user-attachments/assets/043d81dc-a162-4e7a-8054-6bcd4fe596f8" />
+<img width="1920" height="1080" alt="gestion_usuarios" src="https://github.com/user-attachments/assets/1a8d5d32-5d66-47e9-b2a8-8f271cba72ac" />
 <img width="1920" height="1080" alt="crear_cancha" src="https://github.com/user-attachments/assets/95f7829b-0b92-4c10-9ca2-960a5dad8cb8" />
 <img width="1920" height="1080" alt="editar_canchas" src="https://github.com/user-attachments/assets/b75b82a5-9b37-4794-a87f-171653c7e12e" />
 <img width="1920" height="1080" alt="gestion_reservas" src="https://github.com/user-attachments/assets/28a4998c-591e-4f1d-a6c0-6d37e0a4e4ee" />
