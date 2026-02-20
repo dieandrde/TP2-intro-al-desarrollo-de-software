@@ -1,37 +1,71 @@
-
-
-.table {
-  width: 800px;      
-  border-collapse: collapse;
-  background-color: rgb(156, 230, 20);
-}
-
-
-.contenedor_tabla {
-  width:800px;      
-  height: 400px;   
-  overflow-y: auto;
-
-
-}
-.contenedor-botones-vertical {
+.admin-layout {
     display: flex;
-    flex-direction: column; /* Apila uno abajo del otro */
-    align-items: center;    /* Los centra horizontalmente */
-    gap: 100px;              /* Define la SEPARACIÓN exacta entre ellos */
-    padding: 100px;
-    width: 10%;            /* Para que el contenedor no fuerce el ancho */
-    background-color: rgba(12, 32, 22, 0.92);
+    min-height: 100vh;
+    padding-top: 70px; /* header fixed */
+    background-color: #f5f7f6;
+}
+
+.admin-sidebar {
+    width: 220px;
+    background-color: #0c2016;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.admin-sidebar h2 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.admin-sidebar a {
+    color: #dcdcdc;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.admin-sidebar a:hover {
+    background-color: #1e6f43;
+    color: white;
+}
+
+.admin-main {
+    flex: 1;
+    padding: 40px;
+}
+
+.admin-card {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+.admin-card .title {
+    color: #1a1a1a;
+}
+
+.admin-layout {
+    background-color: #1b2821;
+}
+
+.admin-card .label {
+    color: #1a1a1a;
+}
+
+.admin-card .input {
+    color: #1a1a1a;
+    background-color: #182b21;;
 }
 
 
-.btn-navegacion {
-    width: 160px;           /* Define el TAMAÑO (Ancho) */
-    height: 45px;           /* Define el TAMAÑO (Alto) */
-    display: flex;
-    align-items: center;    /* Centra el texto verticalmente */
-    justify-content: center;/* Centra el texto horizontalmente */
-    text-align: center;
-    border-radius: 8px;     /* Bordes redondeados */
-    font-weight: bold;
+.admin-card .input {
+    color: white;
+    border: 1px solid #ffffff33;
+}
+
+.admin-card .input::placeholder {
+    color: #cccccc;
 }

@@ -371,3 +371,5 @@ async function eliminar_reserva(id) {
         alert("Ocurrió un error al intentar conectar con el servidor.");
     }
 }
+
+
