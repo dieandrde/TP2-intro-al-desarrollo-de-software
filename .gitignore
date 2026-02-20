@@ -140,8 +140,3 @@ vite.config.ts.timestamp-*
 
 
 
-# No subir los datos de la DB
-Backend/.volumes/
-postgres_data/
-
-
