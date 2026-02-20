@@ -400,5 +400,3 @@ async function eliminar_reserva(id) {
 }
 
 
-
-

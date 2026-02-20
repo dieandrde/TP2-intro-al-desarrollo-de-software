@@ -1,3 +1,4 @@
+
 async function iniciarSesion( ) {
     const url = 'http://localhost:3000/login'; 
 
@@ -16,7 +17,9 @@ async function iniciarSesion( ) {
         
         if (response.ok) {
             localStorage.setItem('jwtToken', resultado.token);
-            localStorage.setItem('esAdmin', resultado.esAdmin);
+            
+            localStorage.removeItem('esAdmin');
+            localStorage.setItem('esAdmin', resultado.esAdmin ? "true" : "false");
             
             if (resultado.esAdmin) {
                 window.location.href = '/administrador.html';
